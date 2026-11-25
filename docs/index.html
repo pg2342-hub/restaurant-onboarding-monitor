@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- demo-chrome --><meta name="theme-color" content="#f4f2ec"><link rel="icon" href="https://pranavgudise.dev/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="https://pranavgudise.dev/kit/demo.css"><!-- /demo-chrome -->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Restaurant Onboarding Monitor</title>
+<meta name="description" content="Maps a restaurant group's POS, invoice and recipe exports into one item catalog, says which locations are ready to go live, then watches two live weeks for wrong numbers.">
+<style>
+
+.head h1{margin:40px 0 14px}
+.head .lead{max-width:40em}
+/* the readiness board: switch, verdict, counts, unit tiles, unit detail */
+.board{margin:32px 0 0;border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;overflow:hidden;scroll-margin-top:24px}
+.bar-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:16px 24px;border-bottom:1px solid var(--rule)}
+.seg{display:flex;width:fit-content;max-width:100%;gap:2px;padding:3px;border:1px solid var(--rule);border-radius:999px;background:var(--paper)}
+.seg button{min-height:38px;padding:0 18px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);font:500 15px/1 var(--sans);cursor:pointer;white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-checked=true]{background:var(--ink);color:var(--paper)}
+.cap{margin:0;color:var(--ink-2);font-size:15px}
+.vline{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 24px;align-items:center;padding:22px 24px 6px}
+.vline h2{all:unset;display:block;font:400 34px/1.1 var(--serif)}
+.vline p{grid-column:1/-1;margin:0;font-size:17px;max-width:46em}
+.gate{justify-self:end;display:inline-flex;align-items:center;min-height:34px;padding:0 16px;border-radius:999px;font:500 13px/1 var(--mono);letter-spacing:.06em;white-space:nowrap}
+.gate.nogo{background:var(--ink);color:var(--paper)}
+.gate.go{background:var(--green-wash);color:var(--green)}
+.tally{padding:18px 24px 22px}
+.stack{display:flex;gap:4px;height:22px}
+.stack i{flex:1 1 0;border-radius:4px;transition:background-color .3s var(--ease)}
+.k-NO-GO{background:var(--ink)}
+.k-GO-WITH-FIXES{background:repeating-linear-gradient(135deg,var(--ink) 0 1.5px,transparent 1.5px 6px);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.k-GO{background:var(--green)}
+.counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:14px}
+.counts div{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:baseline}
+.counts b{grid-row:span 2;font:400 36px/1 var(--serif)}
+.counts .lab{display:flex;align-items:center;gap:8px;font:500 13px/1.3 var(--mono);letter-spacing:.04em}
+.counts .lab i{width:12px;height:12px;border-radius:3px;flex:none}
+.counts span:last-child{color:var(--ink-2);font-size:14px;line-height:1.35}
+.counts .zero b{color:var(--ink-2)}
+.campuses{border-top:1px solid var(--rule);padding:6px 24px 22px}
+.campus h3{display:flex;align-items:baseline;gap:10px;margin:18px 0 10px;font:400 20px/1.2 var(--serif)}
+.campus h3 span{font:400 13px/1 var(--mono);color:var(--ink-2)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(186px,1fr));gap:10px}
+button.tile{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:8px;min-height:0;padding:0 14px 12px;border:1px solid var(--rule);border-radius:12px;background:var(--paper);color:var(--ink);text-align:left;font:inherit;font-weight:400;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s var(--ease)}
+button.tile::before{content:"";display:block;height:5px;margin:0 -14px 4px}
+button.tile.t-NO-GO::before{background:var(--ink)}
+button.tile.t-GO-WITH-FIXES::before{background:repeating-linear-gradient(90deg,var(--ink) 0 8px,transparent 8px 12px)}
+button.tile.t-GO::before{background:var(--green)}
+button.tile:hover{border-color:var(--ink);transform:translateY(-2px)}
+button.tile[aria-expanded=true]{border-color:var(--ink);box-shadow:0 0 0 1.5px var(--ink)}
+.tile .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tile .code{font:400 12.5px/1 var(--mono);color:var(--ink-2)}
+.tile .name{font:400 18px/1.2 var(--serif);min-height:2.4em}
+.tile .nums{margin-top:auto;display:flex;gap:16px;font-size:13px;color:var(--ink-2)}
+.tile .nums b{font:400 22px/1 var(--serif);color:var(--ink);margin-right:5px}
+.tile .nums .z b{color:var(--ink-2)}
+.badge.fixes{border-style:dashed}
+.badge{min-height:24px;padding:0 10px;font-size:11.5px}
+.detail{border-top:1px solid var(--rule);padding:18px 24px 20px;background:var(--paper)}
+.detail h3{margin:0 0 4px;font:400 22px/1.2 var(--serif)}
+.detail .hint{margin:0;color:var(--ink-2);font-size:15px}
+.probs{list-style:none;margin:10px 0 0;padding:0}
+.probs li{display:grid;grid-template-columns:6.5em minmax(0,1fr) 11em;gap:6px 16px;align-items:baseline;margin:0;padding:10px 0;border-top:1px solid var(--rule-soft)}
+.probs li:first-child{border-top:0}
+.probs .own{color:var(--ink-2);font-size:14px}
+.sev{display:inline-flex;align-items:center;justify-self:start;min-height:24px;padding:0 9px;border-radius:999px;border:1px solid var(--rule);font:500 11.5px/1 var(--mono);letter-spacing:.03em}
+.sev.blocking{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.sev.warning{border:1px dashed var(--ink);color:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;padding:12px 24px;border-top:1px solid var(--rule);color:var(--ink-2);font-size:13px}
+/* page body: content and a side column */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:56px;align-items:start}
+.content h2{scroll-margin-top:24px}
+.side{position:sticky;top:24px;margin-top:64px;display:grid;gap:22px;font-size:14px;color:var(--ink-2)}
+.side h3{margin:0 0 6px;font:500 13px/1.3 var(--sans);color:var(--ink)}
+.side p{margin:0}
+.side nav a{display:block;padding:5px 0;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule-soft)}
+.side nav a:hover{color:var(--ink)}
+.side pre{font-size:12px;margin:6px 0 0}
+.note{color:var(--ink-2);font-size:15px;max-width:44em;margin-top:14px}
+/* fix list: one card per owning team */
+.fixsum{margin:0 0 16px;font-size:17px}
+.team{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;margin:0 0 12px;overflow:hidden}
+.team-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px;padding:14px 20px;border-bottom:1px solid var(--rule)}
+.team-h h3{margin:0;font:400 21px/1.2 var(--serif)}
+.team-h p{margin:0;display:flex;gap:14px;font-size:14px;color:var(--ink-2)}
+.team-h p b{font:400 20px/1 var(--serif);color:var(--ink);margin-right:4px}
+.todo{list-style:none;margin:0;padding:0 20px}
+.todo li{display:grid;grid-template-columns:6.5em 7.5em minmax(0,1fr);gap:4px 12px;align-items:baseline;margin:0;padding:11px 0;border-top:1px solid var(--rule-soft)}
+.todo li:first-child{border-top:0}
+.todo .u{font:400 13px/1.4 var(--mono);color:var(--ink-2)}
+.done{border:1px solid var(--rule);border-radius:16px;background:var(--green-wash);color:var(--green);padding:16px 20px;font-size:17px;margin:0}
+/* eval scorecard */
+.score{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;overflow:hidden}
+.score div{padding:18px 20px;font-size:14px;color:var(--ink-2);line-height:1.4}
+.score div+div{border-left:1px solid var(--rule)}
+.score b{display:block;font:400 34px/1.1 var(--serif);color:var(--ink);margin-bottom:6px}
+.score b small{font-size:20px;color:var(--ink-2)}
+#issues{margin-top:8px}
+@media (max-width:1000px){
+ .layout{grid-template-columns:minmax(0,1fr);gap:0}
+ .side{position:static;margin-top:48px}
+ .score{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .score div:nth-child(3){border-left:0}
+ .score div:nth-child(n+3){border-top:1px solid var(--rule)}
+}
+@media (max-width:700px){
+ .bar-top,.vline,.tally,.campuses,.detail,.legend{padding-left:16px;padding-right:16px}
+ .vline h2{font-size:28px}
+ .vline p{font-size:16px}
+ .counts{grid-template-columns:1fr;gap:10px}
+ .counts b{font-size:30px;min-width:1.1em}
+ .tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ button.tile{padding:0 11px 10px}
+ button.tile::before{margin:0 -11px 2px}
+ .tile .name{font-size:16px}
+ .tile .top{flex-wrap:wrap}
+ .tile .nums{flex-wrap:wrap;gap:2px 10px;font-size:12.5px}
+ .tile .nums b{font-size:20px;margin-right:4px}
+ .probs li{grid-template-columns:5.8em minmax(0,1fr);gap:4px 10px}
+ .probs .own{grid-column:2}
+ .team-h,.todo{padding-left:16px;padding-right:16px}
+ .todo li{grid-template-columns:5.8em minmax(0,1fr)}
+ .todo .msg{grid-column:1/-1}
+ .seg button{padding:0 14px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){button.tile,.stack i{transition:none}}
+
+/* page specific */
+.tiles-wave h3{display:flex;align-items:baseline;gap:10px;margin:18px 0 10px;font:400 20px/1.2 var(--serif)}
+.tiles-wave h3 span{font:400 13px/1 var(--mono);color:var(--ink-2)}
+.tl{padding:18px 24px 8px;overflow-x:auto}
+.tlgrid{display:grid;grid-template-columns:9.5em repeat(14,minmax(30px,1fr));gap:4px;align-items:center;min-width:560px}
+.tlgrid .dh{font:400 11.5px/1 var(--mono);color:var(--ink-2);text-align:center}
+.tlgrid .lh{font:400 16px/1.2 var(--serif)}
+.tlgrid .lh span{display:block;font:400 11.5px/1.2 var(--mono);color:var(--ink-2)}
+button.day{min-height:34px;border:1px solid var(--rule);border-radius:6px;background:var(--green-wash);padding:0;cursor:pointer;font:500 13px/1 var(--mono);color:var(--paper)}
+button.day.q{cursor:default}
+button.day.a{background:var(--ink);border-color:var(--ink)}
+button.day[aria-pressed=true]{box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px var(--ink)}
+.tlleg{display:flex;flex-wrap:wrap;gap:6px 20px;color:var(--ink-2);font-size:13px;padding:6px 24px 16px}
+.tlleg span{display:inline-flex;align-items:center;gap:8px}
+.tlleg i{width:12px;height:12px;border-radius:3px}
+.alist{list-style:none;margin:10px 0 0;padding:0}
+.alist li{display:grid;grid-template-columns:4.2em 3.2em minmax(0,1fr) 11em;gap:6px 14px;align-items:baseline;padding:10px 0;border-top:1px solid var(--rule-soft)}
+.alist li:first-child{border-top:0}
+.alist .k{font:500 12px/1.3 var(--mono)}
+.alist .fc{display:block;color:var(--ink-2);font-size:14px;margin-top:3px}
+.alist .own{color:var(--ink-2);font-size:14px}
+/* mapping funnel */
+.funnel{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;padding:20px 24px 16px}
+.funnel svg{display:block;width:100%;height:auto}
+.funnel text{font-family:var(--sans);font-size:13px;fill:var(--ink)}
+.funnel text.n{font-family:var(--serif);font-size:22px}
+.funnel text.s{fill:var(--ink-2);font-size:12px}
+.mgate{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:14px 0 0;font-size:15px}
+.scroll{overflow-x:auto}
+table.sug{width:100%;border-collapse:collapse;font-size:14px}
+table.sug th,table.sug td{text-align:left;padding:9px 10px 9px 0;border-top:1px solid var(--rule-soft);vertical-align:top}
+table.sug th{font:500 12px/1.3 var(--mono);color:var(--ink-2);border-top:0}
+table.sug td.d{font:400 13px/1.35 var(--mono)}
+table.sug .r{font-size:13px;color:var(--ink-2);margin-top:3px}
+.ok{color:var(--green);font-weight:500}.bad{font-weight:500}
+.score.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:700px){
+ .tl{padding-left:16px;padding-right:16px}
+ .tlleg{padding-left:16px;padding-right:16px}
+ .alist li{grid-template-columns:3.6em 2.8em minmax(0,1fr)}
+ .alist .own{grid-column:3}
+ .funnel{padding:16px}
+ .score.three{grid-template-columns:1fr}
+ .score.three div+div{border-left:0;border-top:1px solid var(--rule)}
+}
+
+</style>
+</head>
+<body>
+<!-- demo-chrome --><header class="demo-top"><a class="demo-brand" href="https://pranavgudise.dev/"><svg class="demo-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.25"/><g class="n"><path class="f" d="M15.5 8.5 L 13.4 13.4 L 8.5 15.5 L 10.6 10.6 Z"/></g><circle class="p" cx="12" cy="12" r=".7"/></svg><span>Pranav Gudise</span></a><a class="pill" href="https://github.com/pg2342-hub/restaurant-onboarding-monitor">Code on GitHub</a></header><!-- /demo-chrome -->
+
+<main>
+<div class="head">
+<h1>Restaurant onboarding monitor</h1>
+<p class="lead">A multi-location restaurant group signs on. Before any location goes live, its POS sales, distributor order guides, invoices, recipes, par levels and counts have to line up in one item catalog. This tool maps the vendor lines into the catalog (rules first, Claude for the rest, a person for anything unsure), says location by location whether the numbers can be trusted, and then checks the live data every day.</p>
+</div>
+
+<section class="board" id="board" aria-labelledby="verdict-h">
+  <div class="bar-top">
+    <div class="seg" role="radiogroup" aria-label="Which data to show">
+      <button type="button" role="radio" aria-checked="true" data-v="first">First data pull</button>
+      <button type="button" role="radio" aria-checked="false" data-v="fixed" tabindex="-1">After fixes</button>
+      <button type="button" role="radio" aria-checked="false" data-v="live" tabindex="-1">Live, 14 days</button>
+    </div>
+    <p class="cap" id="cap"></p>
+  </div>
+  <div class="vline" aria-live="polite">
+    <h2 id="verdict-h"></h2>
+    <span class="gate" id="gate"></span>
+    <p id="takeaway"></p>
+  </div>
+  <div id="ready">
+    <div class="tally">
+      <div class="stack" id="stack" aria-hidden="true"></div>
+      <div class="counts" id="counts"></div>
+    </div>
+    <div class="campuses" id="units"></div>
+  </div>
+  <div id="livebox" hidden>
+    <div class="tl"><div class="tlgrid" id="tlgrid"></div></div>
+    <div class="tlleg"><span><i style="background:var(--green-wash);border:1px solid var(--rule)"></i>no alert</span><span><i style="background:var(--ink)"></i>alerts that day (number shown)</span></div>
+  </div>
+  <div class="detail" id="detail" aria-live="polite"></div>
+</section>
+
+<div class="layout">
+<div class="content">
+
+<h2 id="mapping">How the order guide lines were mapped</h2>
+<p class="point" id="mappoint"></p>
+<div class="funnel"><svg id="funnel" viewBox="0 0 640 210" role="img" aria-labelledby="funnel-t"><title id="funnel-t">Order guide lines by mapping stage</title></svg>
+<div class="mgate" id="mgate"></div></div>
+<details open><summary>Every line Claude was asked about</summary><div class="scroll"><table class="sug" id="sug"></table></div></details>
+
+<h2 id="fix-list">Fix list by owner</h2>
+<div id="fixes"></div>
+
+<h2 id="accuracy">How well the checks catch problems</h2>
+<div class="score three" id="stats"></div>
+<p class="note">Each planted problem was run alone on the clean system; a false positive is anything reported that was not planted. The live checks also ran on 30 more simulated weeks with no incident planted.</p>
+<details><summary>The planted problems and incidents</summary><ol id="issues"></ol></details>
+
+<h2 id="checks-h">What it checks</h2>
+<div class="scroll"><table id="checks"><thead><tr><th>Check</th><th>When</th><th>Owner</th></tr></thead><tbody></tbody></table></div>
+</div>
+
+<aside class="side" aria-label="About this build">
+  <nav aria-label="On this page"><a href="#board">Readiness and live board</a><a href="#mapping">Order guide mapping</a><a href="#fix-list">Fix list by owner</a><a href="#accuracy">How well the checks catch problems</a><a href="#checks-h">What it checks</a></nav>
+  <div><h3>Data</h3><p>The restaurant group, its locations, sales, recipes, invoices and counts are made up. Sysco, US Foods and Restaurant Depot are real distributors; the item codes, descriptions and prices are invented in the style of their order guides. The Claude replies are a recorded live run.</p></div>
+  <div><h3>Run it yourself</h3><p>Python 3.10 or later. From the repo folder:</p><pre>pip install -e ".[dev]"
+python scripts/run_all.py
+python -m onboarding.report sample_data/first_pull
+pytest -q</pre></div>
+  <div><a class="pill" href="https://github.com/pg2342-hub/restaurant-onboarding-monitor">Code on GitHub</a></div>
+</aside>
+</div>
+</main>
+<script>
+const D = {"first":{"by_owner":{"Culinary lead":6,"General manager":3,"Onboarding lead":90,"Onboarding lead with the vendor rep":1,"Owner or purchasing":1,"POS admin (group)":1},"group_findings":[{"check":"no_duplicate_codes","detail":"vendor code SY-5520771 is listed twice with different packs ('6/1 GAL' and '4/1 GAL')","location":"group","owner":"Onboarding lead","severity":"warning"}],"locations":[{"blocking":9,"findings":[{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L01","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-2211150 CRMA MEXICANA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L01","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)","location":"L01","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L01","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)","location":"L01","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L01","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L01","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-6604412 SHRIMP, P&D TAIL OFF 21-25: waiting in the review queue (no Claude suggestion recorded yet)","location":"L01","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)","location":"L01","owner":"Onboarding lead","severity":"blocking"}],"location_id":"L01","name":"Westside","pilot_wave":1,"verdict":"NO-GO","warnings":0},{"blocking":10,"findings":[{"check":"menu_item_costed","check_name":"Every item sold has a recipe","detail":"Birria Quesataco: 490 sold (8% of units) with no recipe","location":"L02","owner":"Culinary lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L02","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-2211150 CRMA MEXICANA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L02","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)","location":"L02","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L02","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)","location":"L02","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L02","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L02","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-6604412 SHRIMP, P&D TAIL OFF 21-25: waiting in the review queue (no Claude suggestion recorded yet)","location":"L02","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)","location":"L02","owner":"Onboarding lead","severity":"blocking"}],"location_id":"L02","name":"Harbor","pilot_wave":1,"verdict":"NO-GO","warnings":0},{"blocking":11,"findings":[{"check":"recipe_items_in_catalog","check_name":"Recipes use catalog items","detail":"Nopal Taco uses 'queso_fresco', which is not in the catalog","location":"L03","owner":"Culinary lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L03","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)","location":"L03","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L03","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)","location":"L03","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L03","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-6608830 CACTUS LEAVES, CLEANED DICED: waiting in the review queue (no Claude suggestion recorded yet)","location":"L03","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L03","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)","location":"L03","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-9930118 CHORIZO PORK BULK: not in any order guide","location":"L03","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-65502 PULPO COCIDO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L03","owner":"Onboarding lead","severity":"blocking"}],"location_id":"L03","name":"Midtown East","pilot_wave":1,"verdict":"NO-GO","warnings":0},{"blocking":8,"findings":[{"check":"pos_connected","check_name":"POS connected","detail":"No sales rows from the POS for this location","location":"L04","owner":"POS admin (group)","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L04","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)","location":"L04","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L04","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)","location":"L04","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L04","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L04","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)","location":"L04","owner":"Onboarding lead","severity":"blocking"}],"location_id":"L04","name":"Northgate","pilot_wave":2,"verdict":"NO-GO","warnings":0},{"blocking":11,"findings":[{"check":"menu_item_costed","check_name":"Every item sold has a recipe","detail":"Birria Quesataco: 420 sold (6% of units) with no recipe","location":"L05","owner":"Culinary lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L05","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-2211150 CRMA MEXICANA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L05","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)","location":"L05","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L05","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)","location":"L05","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L05","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_pack_matches","check_name":"Invoice packs match the order guide","detail":"US Foods US-2207718 CHEESE, OAXACA QUESILLO STRING: invoice says '6/1 LB' (6 lb a case), order guide says '6/5 LB' (30 lb a case)","location":"L05","owner":"Onboarding lead with the vendor rep","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L05","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-6604412 SHRIMP, P&D TAIL OFF 21-25: waiting in the review queue (no Claude suggestion recorded yet)","location":"L05","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)","location":"L05","owner":"Onboarding lead","severity":"blocking"}],"location_id":"L05","name":"Canal","pilot_wave":2,"verdict":"NO-GO","warnings":0},{"blocking":10,"findings":[{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L06","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-2211150 CRMA MEXICANA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L06","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)","location":"L06","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L06","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)","location":"L06","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L06","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L06","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-6604412 SHRIMP, P&D TAIL OFF 21-25: waiting in the review queue (no Claude suggestion recorded yet)","location":"L06","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)","location":"L06","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-8801273 CHEESE, MOZZARELLA SHREDDED: waiting in the review queue (no Claude suggestion recorded yet)","location":"L06","owner":"Onboarding lead","severity":"blocking"},{"check":"par_levels_set","check_name":"Par levels set","detail":"1 item used in recipes has no par: cinnamon sticks","location":"L06","owner":"General manager","severity":"warning"}],"location_id":"L06","name":"Riverside","pilot_wave":2,"verdict":"NO-GO","warnings":1},{"blocking":9,"findings":[{"check":"menu_item_costed","check_name":"Every item sold has a recipe","detail":"Agua de Pepino: 63 sold (1% of units) with no recipe","location":"L07","owner":"Culinary lead","severity":"warning"},{"check":"recipe_items_in_catalog","check_name":"Recipes use catalog items","detail":"Nopal Taco uses 'queso_fresco', which is not in the catalog","location":"L07","owner":"Culinary lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L07","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)","location":"L07","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L07","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)","location":"L07","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L07","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-6608830 CACTUS LEAVES, CLEANED DICED: waiting in the review queue (no Claude suggestion recorded yet)","location":"L07","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L07","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)","location":"L07","owner":"Onboarding lead","severity":"blocking"}],"location_id":"L07","name":"Union","pilot_wave":2,"verdict":"NO-GO","warnings":1},{"blocking":8,"findings":[{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L08","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)","location":"L08","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L08","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)","location":"L08","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L08","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L08","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)","location":"L08","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-1023901 CHKN BRST BNLS SKLS: waiting in the review queue (no Claude suggestion recorded yet)","location":"L08","owner":"Onboarding lead","severity":"blocking"},{"check":"price_in_line","check_name":"Prices in line with the group","detail":"avocado hass: $1.62 per each vs group median $1.25 (+30%)","location":"L08","owner":"Owner or purchasing","severity":"warning"}],"location_id":"L08","name":"Park Row","pilot_wave":2,"verdict":"NO-GO","warnings":1},{"blocking":12,"findings":[{"check":"recipe_items_in_catalog","check_name":"Recipes use catalog items","detail":"Nopal Taco uses 'queso_fresco', which is not in the catalog","location":"L09","owner":"Culinary lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-64480 AGUACATE HASS 60CT: waiting in the review queue (no Claude suggestion recorded yet)","location":"L09","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L09","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)","location":"L09","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L09","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)","location":"L09","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-62041 LIMONES 200CT: waiting in the review queue (no Claude suggestion recorded yet)","location":"L09","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L09","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"US Foods US-6608830 CACTUS LEAVES, CLEANED DICED: waiting in the review queue (no Claude suggestion recorded yet)","location":"L09","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L09","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)","location":"L09","owner":"Onboarding lead","severity":"blocking"},{"check":"opening_count","check_name":"Opening count done","detail":"No opening count on file","location":"L09","owner":"General manager","severity":"blocking"}],"location_id":"L09","name":"Eastbank","pilot_wave":2,"verdict":"NO-GO","warnings":0},{"blocking":10,"findings":[{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-64480 AGUACATE HASS 60CT: waiting in the review queue (no Claude suggestion recorded yet)","location":"L10","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L10","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)","location":"L10","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L10","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)","location":"L10","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-62041 LIMONES 200CT: waiting in the review queue (no Claude suggestion recorded yet)","location":"L10","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)","location":"L10","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)","location":"L10","owner":"Onboarding lead","severity":"blocking"},{"check":"invoice_codes_mapped","check_name":"Every invoice line maps to a catalog item","detail":"Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)","location":"L10","owner":"Onboarding lead","severity":"blocking"},{"check":"par_levels_set","check_name":"Par levels set","detail":"No par levels set (21 items used in recipes)","location":"L10","owner":"General manager","severity":"blocking"}],"location_id":"L10","name":"Hillcrest","pilot_wave":2,"verdict":"NO-GO","warnings":0}],"review_queue":[{"base_per_case":null,"claude":null,"description":"CHKN BRST BNLS SKLS","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"4/10 LB","stage":"review","vendor":"Sysco","vendor_code":"SY-1023901"},{"base_per_case":null,"claude":null,"description":"PEPPER JALAP GRN FRSH","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"1/10 LB","stage":"review","vendor":"Sysco","vendor_code":"SY-4415506"},{"base_per_case":null,"claude":null,"description":"CHILE GUAJ DRD WHL","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"6/1 LB","stage":"review","vendor":"Sysco","vendor_code":"SY-5547710"},{"base_per_case":null,"claude":null,"description":"CRMA MEXICANA","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"6/32 OZ","stage":"review","vendor":"US Foods","vendor_code":"US-2211150"},{"base_per_case":null,"claude":null,"description":"SHRIMP, P&D TAIL OFF 21-25","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"5/2 LB","stage":"review","vendor":"US Foods","vendor_code":"US-6604412"},{"base_per_case":null,"claude":null,"description":"CACTUS LEAVES, CLEANED DICED","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"4/5 LB","stage":"review","vendor":"US Foods","vendor_code":"US-6608830"},{"base_per_case":null,"claude":null,"description":"CHEESE, MOZZARELLA SHREDDED","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"4/5 LB","stage":"review","vendor":"US Foods","vendor_code":"US-8801273"},{"base_per_case":null,"claude":null,"description":"MASECA INSTANT MASA","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"1/50 LB","stage":"review","vendor":"Restaurant Depot","vendor_code":"RD-58812"},{"base_per_case":null,"claude":null,"description":"FLOR DE JAMAICA","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"1/5 LB","stage":"review","vendor":"Restaurant Depot","vendor_code":"RD-60177"},{"base_per_case":null,"claude":null,"description":"CANELA ENTERA","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"1/1 LB","stage":"review","vendor":"Restaurant Depot","vendor_code":"RD-60433"},{"base_per_case":null,"claude":null,"description":"FRIJOL PINTO","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"1/25 LB","stage":"review","vendor":"Restaurant Depot","vendor_code":"RD-61290"},{"base_per_case":null,"claude":null,"description":"LIMONES 200CT","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"1/200 CT","stage":"review","vendor":"Restaurant Depot","vendor_code":"RD-62041"},{"base_per_case":null,"claude":null,"description":"TOTOPOS RESTAURANT STYLE","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"1/10 LB","stage":"review","vendor":"Restaurant Depot","vendor_code":"RD-63305"},{"base_per_case":null,"claude":null,"description":"AGUACATE HASS 60CT","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"1/60 CT","stage":"review","vendor":"Restaurant Depot","vendor_code":"RD-64480"},{"base_per_case":null,"claude":null,"description":"PULPO COCIDO","issues":["no Claude suggestion recorded yet"],"item_id":null,"pack":"1/4 LB","stage":"review","vendor":"Restaurant Depot","vendor_code":"RD-65502"}],"stages":{"claude":0,"decision":0,"not_stocked":0,"review":15,"rules":22}},"fixed":{"by_owner":{"Owner or purchasing":1},"group_findings":[],"locations":[{"blocking":0,"findings":[],"location_id":"L01","name":"Westside","pilot_wave":1,"verdict":"GO","warnings":0},{"blocking":0,"findings":[],"location_id":"L02","name":"Harbor","pilot_wave":1,"verdict":"GO","warnings":0},{"blocking":0,"findings":[],"location_id":"L03","name":"Midtown East","pilot_wave":1,"verdict":"GO","warnings":0},{"blocking":0,"findings":[],"location_id":"L04","name":"Northgate","pilot_wave":2,"verdict":"GO","warnings":0},{"blocking":0,"findings":[],"location_id":"L05","name":"Canal","pilot_wave":2,"verdict":"GO","warnings":0},{"blocking":0,"findings":[],"location_id":"L06","name":"Riverside","pilot_wave":2,"verdict":"GO","warnings":0},{"blocking":0,"findings":[],"location_id":"L07","name":"Union","pilot_wave":2,"verdict":"GO","warnings":0},{"blocking":0,"findings":[{"check":"price_in_line","check_name":"Prices in line with the group","detail":"avocado hass: $1.62 per each vs group median $1.25 (+30%)","location":"L08","owner":"Owner or purchasing","severity":"warning"}],"location_id":"L08","name":"Park Row","pilot_wave":2,"verdict":"GO WITH FIXES","warnings":1},{"blocking":0,"findings":[],"location_id":"L09","name":"Eastbank","pilot_wave":2,"verdict":"GO","warnings":0},{"blocking":0,"findings":[],"location_id":"L10","name":"Hillcrest","pilot_wave":2,"verdict":"GO","warnings":0}],"review_queue":[],"stages":{"claude":0,"decision":12,"not_stocked":3,"review":0,"rules":21}},"live":{"alerts":[{"alert_name":"POS feed gap","day":6,"detail":"No sales rows arrived for the day; usage checks that span it are held","first_check":"Check the POS connection for that day and backfill the sales","kind":"pos_feed_gap","location":"L02","owner":"POS admin (group)"},{"alert_name":"Delivery with no invoice","day":8,"detail":"Sysco PO-5306 was due on day 8; no invoice","first_check":"Find the delivery slip and get the invoice from the vendor","kind":"missing_invoice","location":"L03","owner":"General manager"},{"alert_name":"Usage does not match sales","day":11,"detail":"oaxaca cheese: counts show 43.0 lb used on days 9 to 11, sales and recipes say 33.7 (28% more, about $52)","first_check":"Recount the item, then check portioning, waste log and the recipe yield","kind":"count_variance","location":"L01","owner":"General manager"},{"alert_name":"Scheduled count skipped","day":11,"detail":"No count on day 11; the next usage check covers a longer window","first_check":"Do the count today so the next variance window is not twice as long","kind":"count_skipped","location":"L03","owner":"General manager"},{"alert_name":"Price jump","day":12,"detail":"AVOCADO, HASS 48 CT: $73.20 a case, was $60.00 on day 9 (+22%)","first_check":"Ask the vendor rep whether the new price holds or was a mistake","kind":"price_jump","location":"L01","owner":"Owner or purchasing"},{"alert_name":"New line on an invoice","day":12,"detail":"Sysco SY-5561120 PEPPER CHIPOTLE IN ADOBO (12/7 OZ) is not mapped to a catalog item","first_check":"Map the line to a catalog item or tell the location to stop ordering it","kind":"unmapped_line","location":"L02","owner":"Onboarding lead"},{"alert_name":"Usage does not match sales","day":14,"detail":"corn masa flour: counts show 95.3 lb used on days 12 to 14, sales and recipes say 129.1 (26% less, about $29)","first_check":"Recount the item, then check portioning, waste log and the recipe yield","kind":"count_variance","location":"L02","owner":"General manager"}],"days":14,"locations":["L01","L02","L03"]},"mapping":{"lines":37,"stages":{"claude":0,"decision":0,"not_stocked":0,"review":15,"rules":22},"replies":0,"right":0,"wrong":0,"suggestions":[],"gate":"no wrong line reaches the catalog, and every line the rules could not read gets a Claude reply","gate_result":"PENDING","cost":0,"latency":null,"model":"claude-opus-5-5"},"eval":{"r_caught":12,"r_total":12,"r_fp":0,"r_clean":0,"m_caught":7,"m_total":7,"m_fp":0,"quiet":0,"quiet_weeks":30},"issues":["Readiness: POS not connected at L04 (no sales rows)","Readiness: New special sold at L02 and L05 with no recipe","Readiness: Seasonal drink sold at L07 with no recipe (small share)","Readiness: Nopal taco recipe uses an item that is not in the catalog","Readiness: Limes bought by count, catalog tracks pounds, no conversion","Readiness: Invoice pack for Oaxaca cheese differs from the order guide","Readiness: Canola oil code listed twice with different packs","Readiness: No par levels at L10","Readiness: Three par levels missing at L06","Readiness: Avocados at L08 cost 30% more than the group median","Readiness: No opening count at L09","Readiness: Invoice line for a code in no order guide at L03","Live: POS feed gap at L02 on day 6","Live: Oaxaca cheese used 30% over what L01 sold (days 9 to 11)","Live: Sysco delivery at L03 on day 8 with no invoice","Live: Avocado case price up 22% at L01 on day 12","Live: Scheduled count skipped at L03 on day 11","Live: New vendor item on an L02 invoice on day 12, not in any order guide","Live: Masa used 25% under what L02 sold (days 12 to 14)"],"checks":[{"name":"POS connected","when":"Before go-live","owner":"POS admin (group)"},{"name":"Every item sold has a recipe","when":"Before go-live","owner":"Culinary lead"},{"name":"Recipes use catalog items","when":"Before go-live","owner":"Culinary lead"},{"name":"Every invoice line maps to a catalog item","when":"Before go-live","owner":"Onboarding lead"},{"name":"Packs convert to catalog units","when":"Before go-live","owner":"Onboarding lead"},{"name":"Invoice packs match the order guide","when":"Before go-live","owner":"Onboarding lead with the vendor rep"},{"name":"Par levels set","when":"Before go-live","owner":"General manager"},{"name":"Prices in line with the group","when":"Before go-live","owner":"Owner or purchasing"},{"name":"Opening count done","when":"Before go-live","owner":"General manager"},{"name":"Each vendor code listed once","when":"Before go-live","owner":"Onboarding lead"},{"name":"POS feed gap","when":"Every day after go-live","owner":"POS admin (group)"},{"name":"Usage does not match sales","when":"Every day after go-live","owner":"General manager"},{"name":"Delivery with no invoice","when":"Every day after go-live","owner":"General manager"},{"name":"Price jump","when":"Every day after go-live","owner":"Owner or purchasing"},{"name":"Scheduled count skipped","when":"Every day after go-live","owner":"General manager"},{"name":"New line on an invoice","when":"Every day after go-live","owner":"Onboarding lead"}]};
+let view="first", sel=null;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cls=v=>v.replace(/ /g,"-");
+const plural=(n,w)=>`${n} ${w}${n==1?"":"s"}`;
+const ORDER=["NO-GO","GO WITH FIXES","GO"];
+const MEANS={"NO-GO":"at least one blocking problem","GO WITH FIXES":"warnings only","GO":"nothing found"};
+const CAPS={first:"The exports as they arrive at signature: ten locations, nothing decided yet.",
+            fixed:"The same group once the owners have made their fixes.",
+            live:"The three pilot locations, checked every day for two weeks after go-live."};
+const badge=v=>`<span class="badge ${v=="NO-GO"?"no-go":v=="GO"?"go":"fixes"}">${v}</span>`;
+const seg=[...document.querySelectorAll(".seg button")];
+function show(v){view=v;sel=null;seg.forEach(b=>{const on=b.dataset.v==v;b.setAttribute("aria-checked",String(on));b.tabIndex=on?0:-1;});render();}
+seg.forEach((b,i)=>{b.addEventListener("click",()=>show(b.dataset.v));
+  b.addEventListener("keydown",e=>{if(!["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(e.key))return;e.preventDefault();
+  const d=(e.key=="ArrowLeft"||e.key=="ArrowUp")?-1:1;const n=seg[(i+d+seg.length)%seg.length];show(n.dataset.v);n.focus();});});
+function render(){
+  document.getElementById("cap").textContent=CAPS[view];
+  const live=view=="live";
+  document.getElementById("ready").hidden=live; document.getElementById("livebox").hidden=!live;
+  live?renderLive():renderReady();
+  renderFixes();
+}
+function renderReady(){
+  const V=D[view], vs=V.locations;
+  const cnt={};ORDER.forEach(k=>cnt[k]=vs.filter(x=>x.verdict==k).length);
+  const h=document.getElementById("verdict-h"),g=document.getElementById("gate"),t=document.getElementById("takeaway");
+  const nf=vs.reduce((a,x)=>a+x.findings.length,0)+V.group_findings.length;
+  const pilot=vs.filter(x=>x.pilot_wave==1), pilotGo=pilot.filter(x=>x.verdict!="NO-GO").length;
+  if(cnt["NO-GO"]){h.textContent="Not ready";g.className="gate nogo";g.textContent="NO-GO";
+    t.innerHTML=`<b>${cnt["NO-GO"]} of ${vs.length} locations are NO-GO</b>, including ${pilot.length-pilotGo} of the ${pilot.length} pilot locations. ${plural(nf,"finding")} for ${Object.keys(V.by_owner).length} owners; ${plural(V.review_queue.length,"order guide line")} wait for a person.`;}
+  else{h.textContent="Ready";g.className="gate go";g.textContent="GO";
+    t.innerHTML=`<b>All ${vs.length} locations can go live.</b> ${cnt["GO WITH FIXES"]?`${cnt["GO WITH FIXES"]} keeps a warning that is a buying decision, not a data fix.`:"No problems found."}`;}
+  document.getElementById("stack").innerHTML=ORDER.flatMap(k=>Array(cnt[k]).fill(`<i class="k-${cls(k)}"></i>`)).join("");
+  document.getElementById("counts").innerHTML=ORDER.map(k=>`<div class="${cnt[k]?"":"zero"}"><b>${cnt[k]}</b><span class="lab"><i class="k-${cls(k)}"></i>${k}</span><span>${MEANS[k]}</span></div>`).join("");
+  const waves=[[1,"Pilot wave"],[2,"Wave 2"]];
+  document.getElementById("units").innerHTML=waves.map(([w,label])=>{const us=vs.filter(u=>u.pilot_wave==w);
+    return `<div class="campus tiles-wave"><h3>${label} <span>${plural(us.length,"location")}</span></h3><div class="tiles">${us.map(u=>
+      `<button type="button" class="tile t-${cls(u.verdict)}" data-u="${u.location_id}" aria-expanded="${sel==u.location_id}" aria-controls="detail">
+      <span class="top"><span class="code">${u.location_id}</span>${badge(u.verdict)}</span><span class="name">${esc(u.name)}</span>
+      <span class="nums"><span class="${u.blocking?"":"z"}"><b>${u.blocking}</b>blocking</span><span class="${u.warnings?"":"z"}"><b>${u.warnings}</b>${u.warnings==1?"warning":"warnings"}</span></span></button>`).join("")}</div></div>`;}).join("");
+  document.querySelectorAll("button.tile").forEach(b=>b.addEventListener("click",()=>{sel=sel==b.dataset.u?null:b.dataset.u;render();const n=document.querySelector(`button.tile[data-u="${b.dataset.u}"]`);n&&n.focus();}));
+  const det=document.getElementById("detail");
+  if(sel){const u=vs.find(x=>x.location_id==sel);const items=[...u.findings].sort((a,b)=>(a.severity!="blocking")-(b.severity!="blocking"));
+    det.innerHTML=`<h3>${esc(u.name)} <span class="code" style="font:400 14px var(--mono);color:var(--ink-2)">${u.location_id}</span></h3>`+
+    (items.length?`<p class="hint">${plural(items.length,"problem")}. Select the location again to close.</p><ul class="probs">${items.map(x=>`<li><span class="sev ${x.severity}">${x.severity}</span><span><b style="font-weight:500">${esc(x.check_name)}</b><br>${esc(x.detail)}</span><span class="own">${esc(x.owner)}</span></li>`).join("")}</ul>`:`<p class="hint">No problems found for this location.</p>`);}
+  else det.innerHTML=`<p class="hint">Select a location to see its problems and who fixes each one.</p>`;
+}
+function renderLive(){
+  const L=D.live, A=L.alerts;
+  const h=document.getElementById("verdict-h"),g=document.getElementById("gate"),t=document.getElementById("takeaway");
+  h.textContent=`${plural(A.length,"alert")} in ${L.days} days`;g.className="gate nogo";g.textContent="ACT";
+  const kinds=new Set(A.map(a=>a.kind)).size;
+  t.innerHTML=`<b>${plural(A.length,"problem")} of ${kinds} kinds surfaced at ${L.locations.length} pilot locations</b>, each with an owner and the first thing to check. The same checks stayed quiet on 30 simulated weeks with nothing planted.`;
+  const names=Object.fromEntries(D.fixed.locations.map(l=>[l.location_id,l.name]));
+  let html=`<span></span>`+Array.from({length:L.days},(_,i)=>`<span class="dh">${i+1}</span>`).join("");
+  L.locations.forEach(loc=>{html+=`<span class="lh">${esc(names[loc])}<span>${loc}</span></span>`;
+    for(let d=1;d<=L.days;d++){const n=A.filter(a=>a.location==loc&&a.day==d).length;const k=`${loc}-${d}`;
+      html+=n?`<button type="button" class="day a" data-k="${k}" aria-pressed="${sel==k}" aria-label="${loc} day ${d}, ${plural(n,"alert")}">${n}</button>`:`<button type="button" class="day q" tabindex="-1" aria-label="${loc} day ${d}, no alert" disabled></button>`;}});
+  document.getElementById("tlgrid").innerHTML=html;
+  document.querySelectorAll("button.day.a").forEach(b=>b.addEventListener("click",()=>{sel=sel==b.dataset.k?null:b.dataset.k;render();const n=document.querySelector(`button.day[data-k="${b.dataset.k}"]`);n&&n.focus();}));
+  const det=document.getElementById("detail");
+  const shown=sel?A.filter(a=>`${a.location}-${a.day}`==sel):A;
+  det.innerHTML=`<h3>${sel?`Day ${sel.split("-")[1]} at ${esc(names[sel.split("-")[0]])}`:"Every alert, by day"}</h3><p class="hint">${sel?"Select the day again to see every alert.":"Select a dark day above to see only that day."}</p><ul class="alist">${shown.map(a=>`<li><span class="k">Day ${a.day}</span><span class="k">${a.location}</span><span><b style="font-weight:500">${esc(a.alert_name)}</b>: ${esc(a.detail)}<span class="fc">First check: ${esc(a.first_check)}</span></span><span class="own">${esc(a.owner)}</span></li>`).join("")}</ul>`;
+}
+function renderFixes(){
+  const el=document.getElementById("fixes");
+  let items;
+  if(view=="live")items=D.live.alerts.map(a=>({owner:a.owner,severity:"alert",where:`${a.location} day ${a.day}`,msg:`${a.alert_name}: ${a.detail}`}));
+  else{const V=D[view];items=V.locations.flatMap(l=>l.findings.map(f=>({owner:f.owner,severity:f.severity,where:l.location_id,msg:`${f.check_name}: ${f.detail}`}))).concat(V.group_findings.map(f=>({owner:f.owner,severity:f.severity,where:"Group",msg:f.detail})));}
+  if(!items.length){el.innerHTML=`<p class="done">Nothing to fix.</p>`;return;}
+  const groups={};items.forEach(x=>(groups[x.owner]=groups[x.owner]||[]).push(x));
+  const nb=o=>groups[o].filter(x=>x.severity!="warning").length;
+  const order=Object.keys(groups).sort((a,b)=>nb(b)-nb(a)||a.localeCompare(b));
+  el.innerHTML=`<p class="fixsum">${plural(items.length,view=="live"?"alert":"finding")} for ${plural(order.length,"owner")}.${view=="live"?"":" Blocking items first. Review queue lines repeat at each location that buys them."}</p>`+order.map(o=>{const b=nb(o),w=groups[o].length-b;
+    return `<details class="team"><summary class="team-h"><h3>${esc(o)}</h3><p><span><b>${b}</b>${view=="live"?(b==1?"alert":"alerts"):"blocking"}</span>${view=="live"?"":`<span><b>${w}</b>${w==1?"warning":"warnings"}</span>`}</p></summary><ul class="todo">${groups[o].sort((a,b)=>(a.severity=="warning")-(b.severity=="warning")||a.where.localeCompare(b.where)).map(x=>`<li><span class="sev ${x.severity=="warning"?"warning":"blocking"}">${x.severity}</span><span class="u">${esc(x.where)}</span><span class="msg">${esc(x.msg)}</span></li>`).join("")}</ul></details>`;}).join("");
+}
+function renderMapping(){
+  const M=D.mapping, st=M.stages, total=M.lines;
+  document.getElementById("mappoint").innerHTML=M.replies?`<b>${st.rules} of ${total} lines</b> mapped by rules, <b>${st.claude}</b> by Claude at high confidence, and <b>${st.review}</b> went to a person. ${M.wrong==0?"No wrong mapping reached the catalog.":`<b>${M.wrong} wrong mapping${M.wrong==1?"":"s"}</b> reached the catalog.`}`:`<b>${st.rules} of ${total} lines</b> mapped by rules. The other ${st.review} wait for the recorded Claude run.`;
+  const W=640, x0=150, wmax=W-x0-120, sc=wmax/total;
+  const rows=[["All order guide lines",total,"every line from the three distributors"],["Mapped by rules",st.rules,"every word of one catalog name is in the description"],["Mapped by Claude",st.claude,"high confidence, item exists, pack converts"],["Sent to a person",st.review,"not in catalog, unsure, or pack needs a conversion"]];
+  let s="";rows.forEach((r,i)=>{const y=12+i*50,w=Math.max(r[1]*sc,2);const fill=i==0?"var(--rule)":i==3?"var(--ink)":"var(--green)";
+    s+=`<text x="0" y="${y+16}">${r[0]}</text><rect x="${x0}" y="${y}" width="${w}" height="26" rx="4" fill="${fill}"></rect><text class="n" x="${x0+w+10}" y="${y+21}">${r[1]}</text><text class="s" x="${x0}" y="${y+42}">${r[2]}</text>`;});
+  document.getElementById("funnel").innerHTML=`<title id="funnel-t">Order guide lines by mapping stage</title>`+s;
+  document.getElementById("mgate").innerHTML=`<span class="badge ${M.gate_result=="GO"?"go":"no-go"}">${M.gate_result}</span><span>Gate: ${esc(M.gate)}.</span>${M.replies?`<span class="n">${M.right} of ${M.replies} Claude answers right; $${M.cost.toFixed(3)} for the run; ${M.latency}s average per line; ${esc(M.model)}</span>`:""}`;
+  document.getElementById("sug").innerHTML=`<thead><tr><th>Order guide line</th><th>Claude said</th><th>Answer key</th><th>Where it went</th></tr></thead><tbody>`+M.suggestions.map(x=>`<tr><td class="d">${esc(x.description)}<div class="r">${esc(x.vendor_code)}</div></td><td><span class="${x.right?"ok":"bad"}">${esc(x.suggested)}</span> (${x.confidence})<div class="r">${esc(x.reason)}</div></td><td>${esc(x.truth)}</td><td>${x.stage=="claude"?"catalog":"person"}</td></tr>`).join("")+`</tbody>`;
+}
+const E=D.eval;
+document.getElementById("stats").innerHTML=[
+ [`${E.r_caught} <small>of ${E.r_total}</small>`,`readiness problems caught one at a time, ${E.r_fp} false positives, ${E.r_clean} on the clean system`],
+ [`${E.m_caught} <small>of ${E.m_total}</small>`,`live incidents caught one at a time, ${E.m_fp} false positives`],
+ [`${E.quiet}`,`alerts across ${E.quiet_weeks} simulated live weeks with nothing planted`]].map(s=>`<div><b>${s[0]}</b>${s[1]}</div>`).join("");
+document.getElementById("issues").innerHTML=D.issues.map(i=>`<li>${esc(i)}</li>`).join("");
+document.querySelector("#checks tbody").innerHTML=D.checks.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.when)}</td><td>${esc(c.owner)}</td></tr>`).join("");
+renderMapping();render();
+</script>
+<!-- demo-chrome --><footer class="demo-foot"><span>A working build by <a href="https://pranavgudise.dev/">Pranav Gudise</a>. Synthetic or public data only.</span><a href="https://github.com/pg2342-hub/restaurant-onboarding-monitor">github.com/pg2342-hub/restaurant-onboarding-monitor</a></footer><!-- /demo-chrome -->
+</body>
+</html>

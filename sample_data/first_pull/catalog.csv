@@ -1,0 +1,32 @@
+item_id,name,family,base_unit,category,ref_cost
+chicken_thigh,chicken thigh boneless skinless,weight,lb,protein,3.1
+beef_skirt,beef skirt steak,weight,lb,protein,9.8
+pork_shoulder,pork shoulder boneless,weight,lb,protein,3.4
+shrimp,shrimp peeled deveined 21/25,weight,lb,protein,8.9
+oaxaca_cheese,oaxaca cheese,weight,lb,dairy,5.6
+cotija,cotija cheese crumbled,weight,lb,dairy,6.2
+crema,mexican crema,volume,qt,dairy,4.8
+white_onion,white onion,weight,lb,produce,0.95
+cilantro,cilantro,count,bunch,produce,0.55
+lime,lime,weight,lb,produce,1.3
+avocado,avocado hass,count,each,produce,1.25
+jalapeno,jalapeno pepper,weight,lb,produce,1.4
+roma_tomato,roma tomato,weight,lb,produce,1.2
+pineapple,pineapple,count,each,produce,2.6
+radish,radish,weight,lb,produce,1.1
+cabbage,green cabbage,weight,lb,produce,0.7
+nopales,nopales cactus paddles cleaned,weight,lb,produce,2.4
+masa_harina,corn masa flour,weight,lb,dry,0.85
+guajillo,guajillo chile dried,weight,lb,dry,7.5
+pinto_beans,pinto beans dried,weight,lb,dry,1.05
+rice,long grain rice,weight,lb,dry,0.75
+salt,kosher salt,weight,lb,dry,0.6
+canola_oil,canola oil,volume,qt,dry,2.1
+cumin,ground cumin,weight,lb,dry,6.8
+sugar,cane sugar,weight,lb,dry,0.7
+hibiscus,hibiscus flowers dried,weight,lb,dry,9.5
+cinnamon,cinnamon sticks,weight,lb,dry,11.0
+tortilla_chips,tortilla chips,weight,lb,dry,2.3
+foil_sheet,foil sheets 12 x 14,count,each,paper,0.03
+clamshell,clamshell 8 x 8,count,each,paper,0.22
+cup_16oz,cup 16 oz,count,each,paper,0.09

@@ -1,0 +1,329 @@
+location_id,day,date,menu_item,qty
+L01,1,2026-10-19,Carne Asada Taco,213
+L01,1,2026-10-19,Pollo Asado Taco,183
+L01,1,2026-10-19,Adobada Taco,216
+L01,1,2026-10-19,Shrimp Taco,48
+L01,1,2026-10-19,Quesadilla,66
+L01,1,2026-10-19,Guacamole and Chips,62
+L01,1,2026-10-19,Agua de Jamaica,76
+L01,1,2026-10-19,Horchata,102
+L01,2,2026-10-20,Carne Asada Taco,213
+L01,2,2026-10-20,Pollo Asado Taco,163
+L01,2,2026-10-20,Adobada Taco,205
+L01,2,2026-10-20,Shrimp Taco,43
+L01,2,2026-10-20,Quesadilla,69
+L01,2,2026-10-20,Guacamole and Chips,53
+L01,2,2026-10-20,Agua de Jamaica,82
+L01,2,2026-10-20,Horchata,93
+L01,3,2026-10-21,Carne Asada Taco,245
+L01,3,2026-10-21,Pollo Asado Taco,164
+L01,3,2026-10-21,Adobada Taco,218
+L01,3,2026-10-21,Shrimp Taco,54
+L01,3,2026-10-21,Quesadilla,68
+L01,3,2026-10-21,Guacamole and Chips,59
+L01,3,2026-10-21,Agua de Jamaica,74
+L01,3,2026-10-21,Horchata,88
+L01,4,2026-10-22,Carne Asada Taco,243
+L01,4,2026-10-22,Pollo Asado Taco,191
+L01,4,2026-10-22,Adobada Taco,219
+L01,4,2026-10-22,Shrimp Taco,41
+L01,4,2026-10-22,Quesadilla,69
+L01,4,2026-10-22,Guacamole and Chips,60
+L01,4,2026-10-22,Agua de Jamaica,90
+L01,4,2026-10-22,Horchata,96
+L01,5,2026-10-23,Carne Asada Taco,238
+L01,5,2026-10-23,Pollo Asado Taco,199
+L01,5,2026-10-23,Adobada Taco,204
+L01,5,2026-10-23,Shrimp Taco,54
+L01,5,2026-10-23,Quesadilla,62
+L01,5,2026-10-23,Guacamole and Chips,54
+L01,5,2026-10-23,Agua de Jamaica,83
+L01,5,2026-10-23,Horchata,95
+L01,6,2026-10-24,Carne Asada Taco,184
+L01,6,2026-10-24,Pollo Asado Taco,178
+L01,6,2026-10-24,Adobada Taco,204
+L01,6,2026-10-24,Shrimp Taco,43
+L01,6,2026-10-24,Quesadilla,61
+L01,6,2026-10-24,Guacamole and Chips,57
+L01,6,2026-10-24,Agua de Jamaica,89
+L01,6,2026-10-24,Horchata,103
+L01,7,2026-10-25,Carne Asada Taco,189
+L01,7,2026-10-25,Pollo Asado Taco,177
+L01,7,2026-10-25,Adobada Taco,195
+L01,7,2026-10-25,Shrimp Taco,52
+L01,7,2026-10-25,Quesadilla,66
+L01,7,2026-10-25,Guacamole and Chips,52
+L01,7,2026-10-25,Agua de Jamaica,92
+L01,7,2026-10-25,Horchata,89
+L01,8,2026-10-26,Carne Asada Taco,223
+L01,8,2026-10-26,Pollo Asado Taco,154
+L01,8,2026-10-26,Adobada Taco,219
+L01,8,2026-10-26,Shrimp Taco,48
+L01,8,2026-10-26,Quesadilla,64
+L01,8,2026-10-26,Guacamole and Chips,65
+L01,8,2026-10-26,Agua de Jamaica,86
+L01,8,2026-10-26,Horchata,102
+L01,9,2026-10-27,Carne Asada Taco,192
+L01,9,2026-10-27,Pollo Asado Taco,175
+L01,9,2026-10-27,Adobada Taco,203
+L01,9,2026-10-27,Shrimp Taco,41
+L01,9,2026-10-27,Quesadilla,60
+L01,9,2026-10-27,Guacamole and Chips,63
+L01,9,2026-10-27,Agua de Jamaica,94
+L01,9,2026-10-27,Horchata,116
+L01,10,2026-10-28,Carne Asada Taco,210
+L01,10,2026-10-28,Pollo Asado Taco,164
+L01,10,2026-10-28,Adobada Taco,173
+L01,10,2026-10-28,Shrimp Taco,48
+L01,10,2026-10-28,Quesadilla,56
+L01,10,2026-10-28,Guacamole and Chips,67
+L01,10,2026-10-28,Agua de Jamaica,92
+L01,10,2026-10-28,Horchata,108
+L01,11,2026-10-29,Carne Asada Taco,209
+L01,11,2026-10-29,Pollo Asado Taco,207
+L01,11,2026-10-29,Adobada Taco,200
+L01,11,2026-10-29,Shrimp Taco,51
+L01,11,2026-10-29,Quesadilla,71
+L01,11,2026-10-29,Guacamole and Chips,69
+L01,11,2026-10-29,Agua de Jamaica,72
+L01,11,2026-10-29,Horchata,106
+L01,12,2026-10-30,Carne Asada Taco,224
+L01,12,2026-10-30,Pollo Asado Taco,178
+L01,12,2026-10-30,Adobada Taco,175
+L01,12,2026-10-30,Shrimp Taco,42
+L01,12,2026-10-30,Quesadilla,67
+L01,12,2026-10-30,Guacamole and Chips,53
+L01,12,2026-10-30,Agua de Jamaica,83
+L01,12,2026-10-30,Horchata,107
+L01,13,2026-10-31,Carne Asada Taco,189
+L01,13,2026-10-31,Pollo Asado Taco,190
+L01,13,2026-10-31,Adobada Taco,195
+L01,13,2026-10-31,Shrimp Taco,50
+L01,13,2026-10-31,Quesadilla,63
+L01,13,2026-10-31,Guacamole and Chips,60
+L01,13,2026-10-31,Agua de Jamaica,77
+L01,13,2026-10-31,Horchata,97
+L01,14,2026-11-01,Carne Asada Taco,231
+L01,14,2026-11-01,Pollo Asado Taco,190
+L01,14,2026-11-01,Adobada Taco,179
+L01,14,2026-11-01,Shrimp Taco,43
+L01,14,2026-11-01,Quesadilla,63
+L01,14,2026-11-01,Guacamole and Chips,64
+L01,14,2026-11-01,Agua de Jamaica,81
+L01,14,2026-11-01,Horchata,90
+L02,1,2026-10-19,Carne Asada Taco,198
+L02,1,2026-10-19,Pollo Asado Taco,174
+L02,1,2026-10-19,Adobada Taco,183
+L02,1,2026-10-19,Shrimp Taco,46
+L02,1,2026-10-19,Quesadilla,64
+L02,1,2026-10-19,Guacamole and Chips,60
+L02,1,2026-10-19,Agua de Jamaica,77
+L02,1,2026-10-19,Horchata,90
+L02,2,2026-10-20,Carne Asada Taco,170
+L02,2,2026-10-20,Pollo Asado Taco,141
+L02,2,2026-10-20,Adobada Taco,159
+L02,2,2026-10-20,Shrimp Taco,39
+L02,2,2026-10-20,Quesadilla,64
+L02,2,2026-10-20,Guacamole and Chips,53
+L02,2,2026-10-20,Agua de Jamaica,77
+L02,2,2026-10-20,Horchata,102
+L02,3,2026-10-21,Carne Asada Taco,181
+L02,3,2026-10-21,Pollo Asado Taco,166
+L02,3,2026-10-21,Adobada Taco,148
+L02,3,2026-10-21,Shrimp Taco,41
+L02,3,2026-10-21,Quesadilla,57
+L02,3,2026-10-21,Guacamole and Chips,60
+L02,3,2026-10-21,Agua de Jamaica,81
+L02,3,2026-10-21,Horchata,93
+L02,4,2026-10-22,Carne Asada Taco,208
+L02,4,2026-10-22,Pollo Asado Taco,162
+L02,4,2026-10-22,Adobada Taco,147
+L02,4,2026-10-22,Shrimp Taco,39
+L02,4,2026-10-22,Quesadilla,52
+L02,4,2026-10-22,Guacamole and Chips,47
+L02,4,2026-10-22,Agua de Jamaica,71
+L02,4,2026-10-22,Horchata,78
+L02,5,2026-10-23,Carne Asada Taco,207
+L02,5,2026-10-23,Pollo Asado Taco,148
+L02,5,2026-10-23,Adobada Taco,188
+L02,5,2026-10-23,Shrimp Taco,39
+L02,5,2026-10-23,Quesadilla,59
+L02,5,2026-10-23,Guacamole and Chips,58
+L02,5,2026-10-23,Agua de Jamaica,67
+L02,5,2026-10-23,Horchata,91
+L02,7,2026-10-25,Carne Asada Taco,203
+L02,7,2026-10-25,Pollo Asado Taco,161
+L02,7,2026-10-25,Adobada Taco,188
+L02,7,2026-10-25,Shrimp Taco,37
+L02,7,2026-10-25,Quesadilla,63
+L02,7,2026-10-25,Guacamole and Chips,47
+L02,7,2026-10-25,Agua de Jamaica,74
+L02,7,2026-10-25,Horchata,101
+L02,8,2026-10-26,Carne Asada Taco,167
+L02,8,2026-10-26,Pollo Asado Taco,168
+L02,8,2026-10-26,Adobada Taco,159
+L02,8,2026-10-26,Shrimp Taco,47
+L02,8,2026-10-26,Quesadilla,64
+L02,8,2026-10-26,Guacamole and Chips,56
+L02,8,2026-10-26,Agua de Jamaica,65
+L02,8,2026-10-26,Horchata,94
+L02,9,2026-10-27,Carne Asada Taco,186
+L02,9,2026-10-27,Pollo Asado Taco,170
+L02,9,2026-10-27,Adobada Taco,182
+L02,9,2026-10-27,Shrimp Taco,46
+L02,9,2026-10-27,Quesadilla,53
+L02,9,2026-10-27,Guacamole and Chips,52
+L02,9,2026-10-27,Agua de Jamaica,67
+L02,9,2026-10-27,Horchata,91
+L02,10,2026-10-28,Carne Asada Taco,208
+L02,10,2026-10-28,Pollo Asado Taco,171
+L02,10,2026-10-28,Adobada Taco,146
+L02,10,2026-10-28,Shrimp Taco,41
+L02,10,2026-10-28,Quesadilla,55
+L02,10,2026-10-28,Guacamole and Chips,48
+L02,10,2026-10-28,Agua de Jamaica,84
+L02,10,2026-10-28,Horchata,77
+L02,11,2026-10-29,Carne Asada Taco,210
+L02,11,2026-10-29,Pollo Asado Taco,162
+L02,11,2026-10-29,Adobada Taco,187
+L02,11,2026-10-29,Shrimp Taco,42
+L02,11,2026-10-29,Quesadilla,56
+L02,11,2026-10-29,Guacamole and Chips,58
+L02,11,2026-10-29,Agua de Jamaica,71
+L02,11,2026-10-29,Horchata,97
+L02,12,2026-10-30,Carne Asada Taco,173
+L02,12,2026-10-30,Pollo Asado Taco,148
+L02,12,2026-10-30,Adobada Taco,160
+L02,12,2026-10-30,Shrimp Taco,38
+L02,12,2026-10-30,Quesadilla,50
+L02,12,2026-10-30,Guacamole and Chips,45
+L02,12,2026-10-30,Agua de Jamaica,76
+L02,12,2026-10-30,Horchata,91
+L02,13,2026-10-31,Carne Asada Taco,162
+L02,13,2026-10-31,Pollo Asado Taco,152
+L02,13,2026-10-31,Adobada Taco,161
+L02,13,2026-10-31,Shrimp Taco,36
+L02,13,2026-10-31,Quesadilla,56
+L02,13,2026-10-31,Guacamole and Chips,45
+L02,13,2026-10-31,Agua de Jamaica,73
+L02,13,2026-10-31,Horchata,92
+L02,14,2026-11-01,Carne Asada Taco,174
+L02,14,2026-11-01,Pollo Asado Taco,166
+L02,14,2026-11-01,Adobada Taco,155
+L02,14,2026-11-01,Shrimp Taco,36
+L02,14,2026-11-01,Quesadilla,59
+L02,14,2026-11-01,Guacamole and Chips,51
+L02,14,2026-11-01,Agua de Jamaica,68
+L02,14,2026-11-01,Horchata,89
+L03,1,2026-10-19,Carne Asada Taco,155
+L03,1,2026-10-19,Pollo Asado Taco,122
+L03,1,2026-10-19,Adobada Taco,156
+L03,1,2026-10-19,Nopal Taco,48
+L03,1,2026-10-19,Quesadilla,60
+L03,1,2026-10-19,Guacamole and Chips,42
+L03,1,2026-10-19,Agua de Jamaica,70
+L03,1,2026-10-19,Horchata,79
+L03,2,2026-10-20,Carne Asada Taco,174
+L03,2,2026-10-20,Pollo Asado Taco,149
+L03,2,2026-10-20,Adobada Taco,158
+L03,2,2026-10-20,Nopal Taco,40
+L03,2,2026-10-20,Quesadilla,59
+L03,2,2026-10-20,Guacamole and Chips,53
+L03,2,2026-10-20,Agua de Jamaica,76
+L03,2,2026-10-20,Horchata,79
+L03,3,2026-10-21,Carne Asada Taco,165
+L03,3,2026-10-21,Pollo Asado Taco,137
+L03,3,2026-10-21,Adobada Taco,159
+L03,3,2026-10-21,Nopal Taco,47
+L03,3,2026-10-21,Quesadilla,50
+L03,3,2026-10-21,Guacamole and Chips,49
+L03,3,2026-10-21,Agua de Jamaica,64
+L03,3,2026-10-21,Horchata,75
+L03,4,2026-10-22,Carne Asada Taco,180
+L03,4,2026-10-22,Pollo Asado Taco,162
+L03,4,2026-10-22,Adobada Taco,144
+L03,4,2026-10-22,Nopal Taco,39
+L03,4,2026-10-22,Quesadilla,50
+L03,4,2026-10-22,Guacamole and Chips,54
+L03,4,2026-10-22,Agua de Jamaica,59
+L03,4,2026-10-22,Horchata,84
+L03,5,2026-10-23,Carne Asada Taco,158
+L03,5,2026-10-23,Pollo Asado Taco,155
+L03,5,2026-10-23,Adobada Taco,168
+L03,5,2026-10-23,Nopal Taco,46
+L03,5,2026-10-23,Quesadilla,53
+L03,5,2026-10-23,Guacamole and Chips,53
+L03,5,2026-10-23,Agua de Jamaica,72
+L03,5,2026-10-23,Horchata,72
+L03,6,2026-10-24,Carne Asada Taco,151
+L03,6,2026-10-24,Pollo Asado Taco,161
+L03,6,2026-10-24,Adobada Taco,157
+L03,6,2026-10-24,Nopal Taco,41
+L03,6,2026-10-24,Quesadilla,47
+L03,6,2026-10-24,Guacamole and Chips,55
+L03,6,2026-10-24,Agua de Jamaica,70
+L03,6,2026-10-24,Horchata,86
+L03,7,2026-10-25,Carne Asada Taco,180
+L03,7,2026-10-25,Pollo Asado Taco,132
+L03,7,2026-10-25,Adobada Taco,148
+L03,7,2026-10-25,Nopal Taco,38
+L03,7,2026-10-25,Quesadilla,58
+L03,7,2026-10-25,Guacamole and Chips,44
+L03,7,2026-10-25,Agua de Jamaica,65
+L03,7,2026-10-25,Horchata,77
+L03,8,2026-10-26,Carne Asada Taco,179
+L03,8,2026-10-26,Pollo Asado Taco,130
+L03,8,2026-10-26,Adobada Taco,174
+L03,8,2026-10-26,Nopal Taco,39
+L03,8,2026-10-26,Quesadilla,50
+L03,8,2026-10-26,Guacamole and Chips,42
+L03,8,2026-10-26,Agua de Jamaica,64
+L03,8,2026-10-26,Horchata,87
+L03,9,2026-10-27,Carne Asada Taco,148
+L03,9,2026-10-27,Pollo Asado Taco,139
+L03,9,2026-10-27,Adobada Taco,133
+L03,9,2026-10-27,Nopal Taco,40
+L03,9,2026-10-27,Quesadilla,46
+L03,9,2026-10-27,Guacamole and Chips,53
+L03,9,2026-10-27,Agua de Jamaica,63
+L03,9,2026-10-27,Horchata,80
+L03,10,2026-10-28,Carne Asada Taco,146
+L03,10,2026-10-28,Pollo Asado Taco,146
+L03,10,2026-10-28,Adobada Taco,173
+L03,10,2026-10-28,Nopal Taco,41
+L03,10,2026-10-28,Quesadilla,54
+L03,10,2026-10-28,Guacamole and Chips,46
+L03,10,2026-10-28,Agua de Jamaica,63
+L03,10,2026-10-28,Horchata,83
+L03,11,2026-10-29,Carne Asada Taco,175
+L03,11,2026-10-29,Pollo Asado Taco,121
+L03,11,2026-10-29,Adobada Taco,163
+L03,11,2026-10-29,Nopal Taco,42
+L03,11,2026-10-29,Quesadilla,55
+L03,11,2026-10-29,Guacamole and Chips,54
+L03,11,2026-10-29,Agua de Jamaica,75
+L03,11,2026-10-29,Horchata,70
+L03,12,2026-10-30,Carne Asada Taco,181
+L03,12,2026-10-30,Pollo Asado Taco,138
+L03,12,2026-10-30,Adobada Taco,165
+L03,12,2026-10-30,Nopal Taco,38
+L03,12,2026-10-30,Quesadilla,56
+L03,12,2026-10-30,Guacamole and Chips,43
+L03,12,2026-10-30,Agua de Jamaica,68
+L03,12,2026-10-30,Horchata,74
+L03,13,2026-10-31,Carne Asada Taco,161
+L03,13,2026-10-31,Pollo Asado Taco,157
+L03,13,2026-10-31,Adobada Taco,131
+L03,13,2026-10-31,Nopal Taco,45
+L03,13,2026-10-31,Quesadilla,53
+L03,13,2026-10-31,Guacamole and Chips,48
+L03,13,2026-10-31,Agua de Jamaica,63
+L03,13,2026-10-31,Horchata,72
+L03,14,2026-11-01,Carne Asada Taco,171
+L03,14,2026-11-01,Pollo Asado Taco,158
+L03,14,2026-11-01,Adobada Taco,137
+L03,14,2026-11-01,Nopal Taco,47
+L03,14,2026-11-01,Quesadilla,58
+L03,14,2026-11-01,Guacamole and Chips,49
+L03,14,2026-11-01,Agua de Jamaica,67
+L03,14,2026-11-01,Horchata,86

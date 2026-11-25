@@ -1,0 +1,1549 @@
+{
+  "after_fixes": {
+    "by_owner": {
+      "Owner or purchasing": 1
+    },
+    "group_findings": [],
+    "locations": [
+      {
+        "blocking": 0,
+        "findings": [],
+        "location_id": "L01",
+        "name": "Westside",
+        "pilot_wave": 1,
+        "verdict": "GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 0,
+        "findings": [],
+        "location_id": "L02",
+        "name": "Harbor",
+        "pilot_wave": 1,
+        "verdict": "GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 0,
+        "findings": [],
+        "location_id": "L03",
+        "name": "Midtown East",
+        "pilot_wave": 1,
+        "verdict": "GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 0,
+        "findings": [],
+        "location_id": "L04",
+        "name": "Northgate",
+        "pilot_wave": 2,
+        "verdict": "GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 0,
+        "findings": [],
+        "location_id": "L05",
+        "name": "Canal",
+        "pilot_wave": 2,
+        "verdict": "GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 0,
+        "findings": [],
+        "location_id": "L06",
+        "name": "Riverside",
+        "pilot_wave": 2,
+        "verdict": "GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 0,
+        "findings": [],
+        "location_id": "L07",
+        "name": "Union",
+        "pilot_wave": 2,
+        "verdict": "GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 0,
+        "findings": [
+          {
+            "check": "price_in_line",
+            "check_name": "Prices in line with the group",
+            "detail": "avocado hass: $1.62 per each vs group median $1.25 (+30%)",
+            "location": "L08",
+            "owner": "Owner or purchasing",
+            "severity": "warning"
+          }
+        ],
+        "location_id": "L08",
+        "name": "Park Row",
+        "pilot_wave": 2,
+        "verdict": "GO WITH FIXES",
+        "warnings": 1
+      },
+      {
+        "blocking": 0,
+        "findings": [],
+        "location_id": "L09",
+        "name": "Eastbank",
+        "pilot_wave": 2,
+        "verdict": "GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 0,
+        "findings": [],
+        "location_id": "L10",
+        "name": "Hillcrest",
+        "pilot_wave": 2,
+        "verdict": "GO",
+        "warnings": 0
+      }
+    ],
+    "review_queue": [],
+    "stages": {
+      "claude": 0,
+      "decision": 12,
+      "not_stocked": 3,
+      "review": 0,
+      "rules": 21
+    }
+  },
+  "catalog_items": 31,
+  "eval": {
+    "mapping": {
+      "claude_replies": 0,
+      "claude_right": 0,
+      "cost_usd": 0,
+      "gate": "no wrong line reaches the catalog, and every line the rules could not read gets a Claude reply",
+      "gate_result": "PENDING",
+      "lines_sent_to_claude": 15,
+      "mean_latency_s": null,
+      "rules_only": {
+        "correct_auto": 22,
+        "lines": 37,
+        "to_review": 15,
+        "wrong_auto": 0,
+        "wrong_lines": []
+      },
+      "suggestions": [],
+      "with_claude": {
+        "correct_auto": 22,
+        "lines": 37,
+        "to_review": 15,
+        "wrong_auto": 0,
+        "wrong_lines": []
+      }
+    },
+    "monitor": {
+      "all_together_alerts": 7,
+      "caught": 7,
+      "clean_alerts": 0,
+      "false_positives": 0,
+      "planted": [
+        {
+          "alert": "pos_feed_gap",
+          "caught": true,
+          "extra_alerts": 0,
+          "id": "I1",
+          "incident": "POS feed gap at L02 on day 6"
+        },
+        {
+          "alert": "count_variance",
+          "caught": true,
+          "extra_alerts": 0,
+          "id": "I2",
+          "incident": "Oaxaca cheese used 30% over what L01 sold (days 9 to 11)"
+        },
+        {
+          "alert": "missing_invoice",
+          "caught": true,
+          "extra_alerts": 0,
+          "id": "I3",
+          "incident": "Sysco delivery at L03 on day 8 with no invoice"
+        },
+        {
+          "alert": "price_jump",
+          "caught": true,
+          "extra_alerts": 0,
+          "id": "I4",
+          "incident": "Avocado case price up 22% at L01 on day 12"
+        },
+        {
+          "alert": "count_skipped",
+          "caught": true,
+          "extra_alerts": 0,
+          "id": "I5",
+          "incident": "Scheduled count skipped at L03 on day 11"
+        },
+        {
+          "alert": "unmapped_line",
+          "caught": true,
+          "extra_alerts": 0,
+          "id": "I6",
+          "incident": "New vendor item on an L02 invoice on day 12, not in any order guide"
+        },
+        {
+          "alert": "count_variance",
+          "caught": true,
+          "extra_alerts": 0,
+          "id": "I7",
+          "incident": "Masa used 25% under what L02 sold (days 12 to 14)"
+        }
+      ],
+      "quiet_week_alerts": 0,
+      "quiet_weeks_checked": 30,
+      "total": 7
+    },
+    "readiness": {
+      "all_together_findings": 16,
+      "caught": 12,
+      "clean_findings": 0,
+      "false_positives": 0,
+      "planted": [
+        {
+          "caught": true,
+          "check": "pos_connected",
+          "extra_findings": 0,
+          "id": "P01",
+          "problem": "POS not connected at L04 (no sales rows)"
+        },
+        {
+          "caught": true,
+          "check": "menu_item_costed",
+          "extra_findings": 0,
+          "id": "P02",
+          "problem": "New special sold at L02 and L05 with no recipe"
+        },
+        {
+          "caught": true,
+          "check": "menu_item_costed",
+          "extra_findings": 0,
+          "id": "P03",
+          "problem": "Seasonal drink sold at L07 with no recipe (small share)"
+        },
+        {
+          "caught": true,
+          "check": "recipe_items_in_catalog",
+          "extra_findings": 0,
+          "id": "P04",
+          "problem": "Nopal taco recipe uses an item that is not in the catalog"
+        },
+        {
+          "caught": true,
+          "check": "pack_in_catalog_units",
+          "extra_findings": 0,
+          "id": "P05",
+          "problem": "Limes bought by count, catalog tracks pounds, no conversion"
+        },
+        {
+          "caught": true,
+          "check": "invoice_pack_matches",
+          "extra_findings": 0,
+          "id": "P06",
+          "problem": "Invoice pack for Oaxaca cheese differs from the order guide"
+        },
+        {
+          "caught": true,
+          "check": "no_duplicate_codes",
+          "extra_findings": 0,
+          "id": "P07",
+          "problem": "Canola oil code listed twice with different packs"
+        },
+        {
+          "caught": true,
+          "check": "par_levels_set",
+          "extra_findings": 0,
+          "id": "P08",
+          "problem": "No par levels at L10"
+        },
+        {
+          "caught": true,
+          "check": "par_levels_set",
+          "extra_findings": 0,
+          "id": "P09",
+          "problem": "Three par levels missing at L06"
+        },
+        {
+          "caught": true,
+          "check": "price_in_line",
+          "extra_findings": 0,
+          "id": "P10",
+          "problem": "Avocados at L08 cost 30% more than the group median"
+        },
+        {
+          "caught": true,
+          "check": "opening_count",
+          "extra_findings": 0,
+          "id": "P11",
+          "problem": "No opening count at L09"
+        },
+        {
+          "caught": true,
+          "check": "invoice_codes_mapped",
+          "extra_findings": 0,
+          "id": "P12",
+          "problem": "Invoice line for a code in no order guide at L03"
+        }
+      ],
+      "total": 12
+    }
+  },
+  "first_pull": {
+    "by_owner": {
+      "Culinary lead": 6,
+      "General manager": 3,
+      "Onboarding lead": 90,
+      "Onboarding lead with the vendor rep": 1,
+      "Owner or purchasing": 1,
+      "POS admin (group)": 1
+    },
+    "group_findings": [
+      {
+        "check": "no_duplicate_codes",
+        "detail": "vendor code SY-5520771 is listed twice with different packs ('6/1 GAL' and '4/1 GAL')",
+        "location": "group",
+        "owner": "Onboarding lead",
+        "severity": "warning"
+      }
+    ],
+    "locations": [
+      {
+        "blocking": 9,
+        "findings": [
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L01",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-2211150 CRMA MEXICANA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L01",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L01",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L01",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L01",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L01",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L01",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-6604412 SHRIMP, P&D TAIL OFF 21-25: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L01",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L01",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          }
+        ],
+        "location_id": "L01",
+        "name": "Westside",
+        "pilot_wave": 1,
+        "verdict": "NO-GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 10,
+        "findings": [
+          {
+            "check": "menu_item_costed",
+            "check_name": "Every item sold has a recipe",
+            "detail": "Birria Quesataco: 490 sold (8% of units) with no recipe",
+            "location": "L02",
+            "owner": "Culinary lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L02",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-2211150 CRMA MEXICANA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L02",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L02",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L02",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L02",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L02",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L02",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-6604412 SHRIMP, P&D TAIL OFF 21-25: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L02",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L02",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          }
+        ],
+        "location_id": "L02",
+        "name": "Harbor",
+        "pilot_wave": 1,
+        "verdict": "NO-GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 11,
+        "findings": [
+          {
+            "check": "recipe_items_in_catalog",
+            "check_name": "Recipes use catalog items",
+            "detail": "Nopal Taco uses 'queso_fresco', which is not in the catalog",
+            "location": "L03",
+            "owner": "Culinary lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L03",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L03",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L03",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L03",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L03",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-6608830 CACTUS LEAVES, CLEANED DICED: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L03",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L03",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L03",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-9930118 CHORIZO PORK BULK: not in any order guide",
+            "location": "L03",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-65502 PULPO COCIDO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L03",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          }
+        ],
+        "location_id": "L03",
+        "name": "Midtown East",
+        "pilot_wave": 1,
+        "verdict": "NO-GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 8,
+        "findings": [
+          {
+            "check": "pos_connected",
+            "check_name": "POS connected",
+            "detail": "No sales rows from the POS for this location",
+            "location": "L04",
+            "owner": "POS admin (group)",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L04",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L04",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L04",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L04",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L04",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L04",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L04",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          }
+        ],
+        "location_id": "L04",
+        "name": "Northgate",
+        "pilot_wave": 2,
+        "verdict": "NO-GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 11,
+        "findings": [
+          {
+            "check": "menu_item_costed",
+            "check_name": "Every item sold has a recipe",
+            "detail": "Birria Quesataco: 420 sold (6% of units) with no recipe",
+            "location": "L05",
+            "owner": "Culinary lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L05",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-2211150 CRMA MEXICANA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L05",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L05",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L05",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L05",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L05",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_pack_matches",
+            "check_name": "Invoice packs match the order guide",
+            "detail": "US Foods US-2207718 CHEESE, OAXACA QUESILLO STRING: invoice says '6/1 LB' (6 lb a case), order guide says '6/5 LB' (30 lb a case)",
+            "location": "L05",
+            "owner": "Onboarding lead with the vendor rep",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L05",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-6604412 SHRIMP, P&D TAIL OFF 21-25: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L05",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L05",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          }
+        ],
+        "location_id": "L05",
+        "name": "Canal",
+        "pilot_wave": 2,
+        "verdict": "NO-GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 10,
+        "findings": [
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L06",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-2211150 CRMA MEXICANA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L06",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L06",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L06",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L06",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L06",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L06",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-6604412 SHRIMP, P&D TAIL OFF 21-25: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L06",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L06",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-8801273 CHEESE, MOZZARELLA SHREDDED: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L06",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "par_levels_set",
+            "check_name": "Par levels set",
+            "detail": "1 item used in recipes has no par: cinnamon sticks",
+            "location": "L06",
+            "owner": "General manager",
+            "severity": "warning"
+          }
+        ],
+        "location_id": "L06",
+        "name": "Riverside",
+        "pilot_wave": 2,
+        "verdict": "NO-GO",
+        "warnings": 1
+      },
+      {
+        "blocking": 9,
+        "findings": [
+          {
+            "check": "menu_item_costed",
+            "check_name": "Every item sold has a recipe",
+            "detail": "Agua de Pepino: 63 sold (1% of units) with no recipe",
+            "location": "L07",
+            "owner": "Culinary lead",
+            "severity": "warning"
+          },
+          {
+            "check": "recipe_items_in_catalog",
+            "check_name": "Recipes use catalog items",
+            "detail": "Nopal Taco uses 'queso_fresco', which is not in the catalog",
+            "location": "L07",
+            "owner": "Culinary lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L07",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L07",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L07",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L07",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L07",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-6608830 CACTUS LEAVES, CLEANED DICED: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L07",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L07",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L07",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          }
+        ],
+        "location_id": "L07",
+        "name": "Union",
+        "pilot_wave": 2,
+        "verdict": "NO-GO",
+        "warnings": 1
+      },
+      {
+        "blocking": 8,
+        "findings": [
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L08",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L08",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L08",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L08",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L08",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L08",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L08",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-1023901 CHKN BRST BNLS SKLS: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L08",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "price_in_line",
+            "check_name": "Prices in line with the group",
+            "detail": "avocado hass: $1.62 per each vs group median $1.25 (+30%)",
+            "location": "L08",
+            "owner": "Owner or purchasing",
+            "severity": "warning"
+          }
+        ],
+        "location_id": "L08",
+        "name": "Park Row",
+        "pilot_wave": 2,
+        "verdict": "NO-GO",
+        "warnings": 1
+      },
+      {
+        "blocking": 12,
+        "findings": [
+          {
+            "check": "recipe_items_in_catalog",
+            "check_name": "Recipes use catalog items",
+            "detail": "Nopal Taco uses 'queso_fresco', which is not in the catalog",
+            "location": "L09",
+            "owner": "Culinary lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-64480 AGUACATE HASS 60CT: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L09",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L09",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L09",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L09",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L09",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-62041 LIMONES 200CT: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L09",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L09",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "US Foods US-6608830 CACTUS LEAVES, CLEANED DICED: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L09",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L09",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L09",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "opening_count",
+            "check_name": "Opening count done",
+            "detail": "No opening count on file",
+            "location": "L09",
+            "owner": "General manager",
+            "severity": "blocking"
+          }
+        ],
+        "location_id": "L09",
+        "name": "Eastbank",
+        "pilot_wave": 2,
+        "verdict": "NO-GO",
+        "warnings": 0
+      },
+      {
+        "blocking": 10,
+        "findings": [
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-64480 AGUACATE HASS 60CT: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L10",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60433 CANELA ENTERA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L10",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-5547710 CHILE GUAJ DRD WHL: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L10",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-60177 FLOR DE JAMAICA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L10",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Sysco SY-4415506 PEPPER JALAP GRN FRSH: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L10",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-62041 LIMONES 200CT: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L10",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-58812 MASECA INSTANT MASA: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L10",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-61290 FRIJOL PINTO: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L10",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "invoice_codes_mapped",
+            "check_name": "Every invoice line maps to a catalog item",
+            "detail": "Restaurant Depot RD-63305 TOTOPOS RESTAURANT STYLE: waiting in the review queue (no Claude suggestion recorded yet)",
+            "location": "L10",
+            "owner": "Onboarding lead",
+            "severity": "blocking"
+          },
+          {
+            "check": "par_levels_set",
+            "check_name": "Par levels set",
+            "detail": "No par levels set (21 items used in recipes)",
+            "location": "L10",
+            "owner": "General manager",
+            "severity": "blocking"
+          }
+        ],
+        "location_id": "L10",
+        "name": "Hillcrest",
+        "pilot_wave": 2,
+        "verdict": "NO-GO",
+        "warnings": 0
+      }
+    ],
+    "review_queue": [
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "CHKN BRST BNLS SKLS",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "4/10 LB",
+        "stage": "review",
+        "vendor": "Sysco",
+        "vendor_code": "SY-1023901"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "PEPPER JALAP GRN FRSH",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "1/10 LB",
+        "stage": "review",
+        "vendor": "Sysco",
+        "vendor_code": "SY-4415506"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "CHILE GUAJ DRD WHL",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "6/1 LB",
+        "stage": "review",
+        "vendor": "Sysco",
+        "vendor_code": "SY-5547710"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "CRMA MEXICANA",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "6/32 OZ",
+        "stage": "review",
+        "vendor": "US Foods",
+        "vendor_code": "US-2211150"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "SHRIMP, P&D TAIL OFF 21-25",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "5/2 LB",
+        "stage": "review",
+        "vendor": "US Foods",
+        "vendor_code": "US-6604412"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "CACTUS LEAVES, CLEANED DICED",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "4/5 LB",
+        "stage": "review",
+        "vendor": "US Foods",
+        "vendor_code": "US-6608830"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "CHEESE, MOZZARELLA SHREDDED",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "4/5 LB",
+        "stage": "review",
+        "vendor": "US Foods",
+        "vendor_code": "US-8801273"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "MASECA INSTANT MASA",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "1/50 LB",
+        "stage": "review",
+        "vendor": "Restaurant Depot",
+        "vendor_code": "RD-58812"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "FLOR DE JAMAICA",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "1/5 LB",
+        "stage": "review",
+        "vendor": "Restaurant Depot",
+        "vendor_code": "RD-60177"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "CANELA ENTERA",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "1/1 LB",
+        "stage": "review",
+        "vendor": "Restaurant Depot",
+        "vendor_code": "RD-60433"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "FRIJOL PINTO",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "1/25 LB",
+        "stage": "review",
+        "vendor": "Restaurant Depot",
+        "vendor_code": "RD-61290"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "LIMONES 200CT",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "1/200 CT",
+        "stage": "review",
+        "vendor": "Restaurant Depot",
+        "vendor_code": "RD-62041"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "TOTOPOS RESTAURANT STYLE",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "1/10 LB",
+        "stage": "review",
+        "vendor": "Restaurant Depot",
+        "vendor_code": "RD-63305"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "AGUACATE HASS 60CT",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "1/60 CT",
+        "stage": "review",
+        "vendor": "Restaurant Depot",
+        "vendor_code": "RD-64480"
+      },
+      {
+        "base_per_case": null,
+        "claude": null,
+        "description": "PULPO COCIDO",
+        "issues": [
+          "no Claude suggestion recorded yet"
+        ],
+        "item_id": null,
+        "pack": "1/4 LB",
+        "stage": "review",
+        "vendor": "Restaurant Depot",
+        "vendor_code": "RD-65502"
+      }
+    ],
+    "stages": {
+      "claude": 0,
+      "decision": 0,
+      "not_stocked": 0,
+      "review": 15,
+      "rules": 22
+    }
+  },
+  "incidents": [
+    {
+      "id": "I1",
+      "kind": "pos_feed_gap",
+      "location": "L02",
+      "what": "POS feed gap at L02 on day 6"
+    },
+    {
+      "id": "I2",
+      "kind": "count_variance",
+      "location": "L01",
+      "what": "Oaxaca cheese used 30% over what L01 sold (days 9 to 11)"
+    },
+    {
+      "id": "I3",
+      "kind": "missing_invoice",
+      "location": "L03",
+      "what": "Sysco delivery at L03 on day 8 with no invoice"
+    },
+    {
+      "id": "I4",
+      "kind": "price_jump",
+      "location": "L01",
+      "what": "Avocado case price up 22% at L01 on day 12"
+    },
+    {
+      "id": "I5",
+      "kind": "count_skipped",
+      "location": "L03",
+      "what": "Scheduled count skipped at L03 on day 11"
+    },
+    {
+      "id": "I6",
+      "kind": "unmapped_line",
+      "location": "L02",
+      "what": "New vendor item on an L02 invoice on day 12, not in any order guide"
+    },
+    {
+      "id": "I7",
+      "kind": "count_variance",
+      "location": "L02",
+      "what": "Masa used 25% under what L02 sold (days 12 to 14)"
+    }
+  ],
+  "live": {
+    "alerts": [
+      {
+        "alert_name": "POS feed gap",
+        "day": 6,
+        "detail": "No sales rows arrived for the day; usage checks that span it are held",
+        "first_check": "Check the POS connection for that day and backfill the sales",
+        "kind": "pos_feed_gap",
+        "location": "L02",
+        "owner": "POS admin (group)"
+      },
+      {
+        "alert_name": "Delivery with no invoice",
+        "day": 8,
+        "detail": "Sysco PO-5306 was due on day 8; no invoice",
+        "first_check": "Find the delivery slip and get the invoice from the vendor",
+        "kind": "missing_invoice",
+        "location": "L03",
+        "owner": "General manager"
+      },
+      {
+        "alert_name": "Usage does not match sales",
+        "day": 11,
+        "detail": "oaxaca cheese: counts show 43.0 lb used on days 9 to 11, sales and recipes say 33.7 (28% more, about $52)",
+        "first_check": "Recount the item, then check portioning, waste log and the recipe yield",
+        "kind": "count_variance",
+        "location": "L01",
+        "owner": "General manager"
+      },
+      {
+        "alert_name": "Scheduled count skipped",
+        "day": 11,
+        "detail": "No count on day 11; the next usage check covers a longer window",
+        "first_check": "Do the count today so the next variance window is not twice as long",
+        "kind": "count_skipped",
+        "location": "L03",
+        "owner": "General manager"
+      },
+      {
+        "alert_name": "Price jump",
+        "day": 12,
+        "detail": "AVOCADO, HASS 48 CT: $73.20 a case, was $60.00 on day 9 (+22%)",
+        "first_check": "Ask the vendor rep whether the new price holds or was a mistake",
+        "kind": "price_jump",
+        "location": "L01",
+        "owner": "Owner or purchasing"
+      },
+      {
+        "alert_name": "New line on an invoice",
+        "day": 12,
+        "detail": "Sysco SY-5561120 PEPPER CHIPOTLE IN ADOBO (12/7 OZ) is not mapped to a catalog item",
+        "first_check": "Map the line to a catalog item or tell the location to stop ordering it",
+        "kind": "unmapped_line",
+        "location": "L02",
+        "owner": "Onboarding lead"
+      },
+      {
+        "alert_name": "Usage does not match sales",
+        "day": 14,
+        "detail": "corn masa flour: counts show 95.3 lb used on days 12 to 14, sales and recipes say 129.1 (26% less, about $29)",
+        "first_check": "Recount the item, then check portioning, waste log and the recipe yield",
+        "kind": "count_variance",
+        "location": "L02",
+        "owner": "General manager"
+      }
+    ],
+    "days": 14,
+    "locations": [
+      "L01",
+      "L02",
+      "L03"
+    ]
+  },
+  "model": "claude-opus-5-5",
+  "order_guide_lines": 37
+}

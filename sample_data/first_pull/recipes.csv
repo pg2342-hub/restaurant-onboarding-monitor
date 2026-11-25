@@ -1,0 +1,48 @@
+menu_item,item_id,qty_base
+Carne Asada Taco,beef_skirt,0.2
+Carne Asada Taco,masa_harina,0.07
+Carne Asada Taco,white_onion,0.02
+Carne Asada Taco,cilantro,0.02
+Carne Asada Taco,lime,0.03
+Carne Asada Taco,foil_sheet,1
+Pollo Asado Taco,chicken_thigh,0.2
+Pollo Asado Taco,masa_harina,0.07
+Pollo Asado Taco,white_onion,0.02
+Pollo Asado Taco,cilantro,0.02
+Pollo Asado Taco,lime,0.03
+Pollo Asado Taco,foil_sheet,1
+Adobada Taco,pork_shoulder,0.22
+Adobada Taco,guajillo,0.008
+Adobada Taco,pineapple,0.04
+Adobada Taco,masa_harina,0.07
+Adobada Taco,cumin,0.002
+Adobada Taco,foil_sheet,1
+Nopal Taco,nopales,0.16
+Nopal Taco,oaxaca_cheese,0.05
+Nopal Taco,masa_harina,0.07
+Nopal Taco,roma_tomato,0.03
+Nopal Taco,foil_sheet,1
+Shrimp Taco,shrimp,0.14
+Shrimp Taco,cabbage,0.04
+Shrimp Taco,crema,0.02
+Shrimp Taco,masa_harina,0.07
+Shrimp Taco,lime,0.03
+Shrimp Taco,foil_sheet,1
+Quesadilla,oaxaca_cheese,0.18
+Quesadilla,masa_harina,0.12
+Quesadilla,jalapeno,0.02
+Quesadilla,clamshell,1
+Guacamole and Chips,avocado,1.5
+Guacamole and Chips,white_onion,0.03
+Guacamole and Chips,jalapeno,0.02
+Guacamole and Chips,lime,0.05
+Guacamole and Chips,tortilla_chips,0.25
+Guacamole and Chips,clamshell,1
+Agua de Jamaica,hibiscus,0.02
+Agua de Jamaica,sugar,0.08
+Agua de Jamaica,cup_16oz,1
+Horchata,rice,0.06
+Horchata,cinnamon,0.003
+Horchata,sugar,0.08
+Horchata,cup_16oz,1
+Nopal Taco,queso_fresco,0.04

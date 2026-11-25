@@ -1,0 +1,48 @@
+name: Record a live run
+
+# Sends the order guide lines the rules cannot read to Claude, saves every reply to
+# recordings/mapping.jsonl, rebuilds the results and the demo page from the recording, and commits them.
+# Needs the ANTHROPIC_API_KEY repository secret.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - name: Live run (one Claude call per line the rules cannot read)
+        run: |
+          test -n "$ANTHROPIC_API_KEY" || { echo "Set the ANTHROPIC_API_KEY repo secret first"; exit 1; }
+          rm -f recordings/mapping.jsonl
+          MAPPER_LIVE=1 python scripts/run_all.py
+          test "$(wc -l < recordings/mapping.jsonl)" -eq 15 || { echo "incomplete recording, not committing"; exit 1; }
+      - name: Keep the recording even if a later step fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recording
+          path: recordings/mapping.jsonl
+          if-no-files-found: ignore
+      - name: Grade the recording and rebuild the demo page (replay only)
+        run: |
+          python scripts/run_all.py
+          pytest -q || echo "::warning::the recorded run is below the bar; CI will fail until it is fixed"
+          python docs/build_page.py
+          python -c "import json;m=json.load(open('reports/results.json'))['eval']['mapping'];print('gate',m['gate_result'],'right',m['claude_right'],'of',m['claude_replies'],'cost',m['cost_usd'])" >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add recordings reports docs eval/results sample_data
+          git commit -m "Record live run" || echo "nothing to commit"
+          git push

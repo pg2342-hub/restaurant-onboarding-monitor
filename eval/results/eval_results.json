@@ -1,0 +1,179 @@
+{
+  "readiness": {
+    "clean_findings": 0,
+    "planted": [
+      {
+        "id": "P01",
+        "problem": "POS not connected at L04 (no sales rows)",
+        "check": "pos_connected",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P02",
+        "problem": "New special sold at L02 and L05 with no recipe",
+        "check": "menu_item_costed",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P03",
+        "problem": "Seasonal drink sold at L07 with no recipe (small share)",
+        "check": "menu_item_costed",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P04",
+        "problem": "Nopal taco recipe uses an item that is not in the catalog",
+        "check": "recipe_items_in_catalog",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P05",
+        "problem": "Limes bought by count, catalog tracks pounds, no conversion",
+        "check": "pack_in_catalog_units",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P06",
+        "problem": "Invoice pack for Oaxaca cheese differs from the order guide",
+        "check": "invoice_pack_matches",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P07",
+        "problem": "Canola oil code listed twice with different packs",
+        "check": "no_duplicate_codes",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P08",
+        "problem": "No par levels at L10",
+        "check": "par_levels_set",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P09",
+        "problem": "Three par levels missing at L06",
+        "check": "par_levels_set",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P10",
+        "problem": "Avocados at L08 cost 30% more than the group median",
+        "check": "price_in_line",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P11",
+        "problem": "No opening count at L09",
+        "check": "opening_count",
+        "caught": true,
+        "extra_findings": 0
+      },
+      {
+        "id": "P12",
+        "problem": "Invoice line for a code in no order guide at L03",
+        "check": "invoice_codes_mapped",
+        "caught": true,
+        "extra_findings": 0
+      }
+    ],
+    "caught": 12,
+    "total": 12,
+    "false_positives": 0,
+    "all_together_findings": 16
+  },
+  "monitor": {
+    "clean_alerts": 0,
+    "planted": [
+      {
+        "id": "I1",
+        "incident": "POS feed gap at L02 on day 6",
+        "alert": "pos_feed_gap",
+        "caught": true,
+        "extra_alerts": 0
+      },
+      {
+        "id": "I2",
+        "incident": "Oaxaca cheese used 30% over what L01 sold (days 9 to 11)",
+        "alert": "count_variance",
+        "caught": true,
+        "extra_alerts": 0
+      },
+      {
+        "id": "I3",
+        "incident": "Sysco delivery at L03 on day 8 with no invoice",
+        "alert": "missing_invoice",
+        "caught": true,
+        "extra_alerts": 0
+      },
+      {
+        "id": "I4",
+        "incident": "Avocado case price up 22% at L01 on day 12",
+        "alert": "price_jump",
+        "caught": true,
+        "extra_alerts": 0
+      },
+      {
+        "id": "I5",
+        "incident": "Scheduled count skipped at L03 on day 11",
+        "alert": "count_skipped",
+        "caught": true,
+        "extra_alerts": 0
+      },
+      {
+        "id": "I6",
+        "incident": "New vendor item on an L02 invoice on day 12, not in any order guide",
+        "alert": "unmapped_line",
+        "caught": true,
+        "extra_alerts": 0
+      },
+      {
+        "id": "I7",
+        "incident": "Masa used 25% under what L02 sold (days 12 to 14)",
+        "alert": "count_variance",
+        "caught": true,
+        "extra_alerts": 0
+      }
+    ],
+    "caught": 7,
+    "total": 7,
+    "false_positives": 0,
+    "all_together_alerts": 7,
+    "quiet_weeks_checked": 30,
+    "quiet_week_alerts": 0
+  },
+  "mapping": {
+    "rules_only": {
+      "lines": 37,
+      "correct_auto": 22,
+      "wrong_auto": 0,
+      "to_review": 15,
+      "wrong_lines": []
+    },
+    "with_claude": {
+      "lines": 37,
+      "correct_auto": 22,
+      "wrong_auto": 0,
+      "to_review": 15,
+      "wrong_lines": []
+    },
+    "lines_sent_to_claude": 15,
+    "claude_replies": 0,
+    "claude_right": 0,
+    "suggestions": [],
+    "cost_usd": 0,
+    "mean_latency_s": null,
+    "gate": "no wrong line reaches the catalog, and every line the rules could not read gets a Claude reply",
+    "gate_result": "PENDING"
+  }
+}
