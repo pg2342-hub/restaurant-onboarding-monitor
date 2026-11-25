@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Restaurant Onboarding Monitor</title>
-<meta name="description" content="Maps a restaurant group's POS, invoice and recipe exports into one item catalog, says which locations are ready to go live, then watches two live weeks for wrong numbers.">
+<meta name="description" content="Maps a restaurant group's POS, invoice, and recipe exports into one item catalog, says which locations are ready to go live, then watches two live weeks for wrong numbers.">
 <style>
 
 .head h1{margin:40px 0 14px}
@@ -176,7 +176,7 @@ table.sug .r{font-size:13px;color:var(--ink-2);margin-top:3px}
 <main>
 <div class="head">
 <h1>Restaurant onboarding monitor</h1>
-<p class="lead">A multi-location restaurant group signs on. Before any location goes live, its POS sales, distributor order guides, invoices, recipes, par levels and counts have to line up in one item catalog. This tool maps the vendor lines into the catalog (rules first, Claude for the rest, a person for anything unsure), says location by location whether the numbers can be trusted, and then checks the live data every day.</p>
+<p class="lead">A multi-location restaurant group signs on. Before any location goes live, its POS sales, distributor order guides, invoices, recipes, par levels, and counts have to line up in one item catalog. This tool maps the vendor lines into the catalog (rules first, Claude for the rest, a person for anything unsure), says location by location whether the numbers can be trusted, and then checks the live data every day.</p>
 </div>
 
 <section class="board" id="board" aria-labelledby="verdict-h">
@@ -230,7 +230,7 @@ table.sug .r{font-size:13px;color:var(--ink-2);margin-top:3px}
 
 <aside class="side" aria-label="About this build">
   <nav aria-label="On this page"><a href="#board">Readiness and live board</a><a href="#mapping">Order guide mapping</a><a href="#fix-list">Fix list by owner</a><a href="#accuracy">How well the checks catch problems</a><a href="#checks-h">What it checks</a></nav>
-  <div><h3>Data</h3><p>The restaurant group, its locations, sales, recipes, invoices and counts are made up. Sysco, US Foods and Restaurant Depot are real distributors; the item codes, descriptions and prices are invented in the style of their order guides. The Claude replies are a recorded live run.</p></div>
+  <div><h3>Data</h3><p>The restaurant group, its locations, sales, recipes, invoices, and counts are made up. Sysco, US Foods, and Restaurant Depot are real distributors; the item codes, descriptions, and prices are invented in the style of their order guides. The Claude replies are a recorded live run.</p></div>
   <div><h3>Run it yourself</h3><p>Python 3.10 or later. From the repo folder:</p><pre>pip install -e ".[dev]"
 python scripts/run_all.py
 python -m onboarding.report sample_data/first_pull
