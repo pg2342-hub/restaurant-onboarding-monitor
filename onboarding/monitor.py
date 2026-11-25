@@ -1,6 +1,6 @@
 """After go-live: daily checks on the live data, so wrong numbers are caught before a manager trusts them.
 
-Each alert names the location, the day, the owner and the first thing to check.
+Each alert names the location, the day, the owner, and the first thing to check.
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ PRICE_JUMP = 0.15  # case price this far over the previous invoice for the same 
 
 ALERTS = {
     "pos_feed_gap": ("POS feed gap", "POS admin (group)", "Check the POS connection for that day and backfill the sales"),
-    "count_variance": ("Usage does not match sales", "General manager", "Recount the item, then check portioning, waste log and the recipe yield"),
+    "count_variance": ("Usage does not match sales", "General manager", "Recount the item, then check portioning, waste log, and the recipe yield"),
     "missing_invoice": ("Delivery with no invoice", "General manager", "Find the delivery slip and get the invoice from the vendor"),
     "price_jump": ("Price jump", "Owner or purchasing", "Ask the vendor rep whether the new price holds or was a mistake"),
     "count_skipped": ("Scheduled count skipped", "General manager", "Do the count today so the next variance window is not twice as long"),
@@ -41,7 +41,7 @@ def run(live: dict, base: dict, maps: list[dict]) -> dict:
     for r in base["recipes"]:
         recipes.setdefault(r["menu_item"], {})[r["item_id"]] = float(r["qty_base"])
     schedule = [int(d) for d in live.get("count_schedule", [])]
-    locs = sorted({r["location_id"] for r in live["purchase_orders"]})
+    locs = sorted({r["location_id"] for r in live["purchase_orders"]} | {r["location_id"] for r in live["pos_sales"]})
     days = sorted({int(r["delivery_day"]) for r in live["purchase_orders"]} | {int(r["day"]) for r in live["counts"]} | set(schedule))
     last_day = max(days) if days else 0
     alerts: list[Alert] = []
@@ -68,7 +68,7 @@ def run(live: dict, base: dict, maps: list[dict]) -> dict:
                     if line["po_no"] == po_no and line["location_id"] == loc and m and m.get("item_id"):
                         unreceived.add((int(r["delivery_day"]), m["item_id"]))
 
-        last_price: dict[str, tuple[int, float]] = {}
+        last_price: dict[str, tuple[int, float, str]] = {}
         for inv in sorted(invoices, key=lambda r: int(r["day"])):
             code = inv["vendor_code"]
             m = by_code.get(code)
@@ -78,12 +78,12 @@ def run(live: dict, base: dict, maps: list[dict]) -> dict:
                 )
                 continue
             price = float(inv["case_price"])
-            if code in last_price and price > last_price[code][1] * (1 + PRICE_JUMP):
-                prev_day, prev = last_price[code]
+            if code in last_price and last_price[code][2] == inv["pack"] and price > last_price[code][1] * (1 + PRICE_JUMP):
+                prev_day, prev, _ = last_price[code]
                 alerts.append(
                     Alert("price_jump", loc, int(inv["day"]), f"{inv['description']}: ${price:.2f} a case, was ${prev:.2f} on day {prev_day} ({price / prev - 1:+.0%})")
                 )
-            last_price[code] = (int(inv["day"]), price)
+            last_price[code] = (int(inv["day"]), price, inv["pack"])
 
         counts: dict[int, dict[str, float]] = {}
         for r in live["counts"]:

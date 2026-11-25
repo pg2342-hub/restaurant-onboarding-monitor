@@ -4,13 +4,13 @@
 
 Demo page: https://pranavgudise.dev/restaurant-onboarding-monitor/ (switch between the first data pull, the same group after fixes, and two live weeks; select a location or a day to see what is wrong and who fixes it)
 
-A multi-location restaurant group signs on to a back-of-house system. Before a location goes live, its POS sales, distributor order guides, invoices, recipes, par levels and counts have to line up in one item catalog, or food cost, ordering and variance are wrong from day one. This tool does that onboarding work and then keeps watching:
+A multi-location restaurant group signs on to a back-of-house system. Before a location goes live, its POS sales, distributor order guides, invoices, recipes, par levels, and counts have to line up in one item catalog, or food cost, ordering, and variance are wrong from day one. This tool does that onboarding work and then keeps watching:
 
 1. **Map.** Every order guide line is mapped to a catalog item. Rules go first and are strict: they map a line only when every word of exactly one catalog name is in the description after expanding distributor abbreviations. Claude (`claude-opus-5-5`, structured output) suggests an item for the rest. Code decides what is accepted: the item must exist in the catalog, the pack must convert to the catalog's unit, and the confidence must be high. Everything else goes to a person, and a person's decision in `mapping_decisions.csv` always wins.
 2. **Check readiness.** Ten checks per location say GO, GO WITH FIXES or NO-GO, and group every fix by its owner (POS admin, culinary lead, onboarding lead, general manager, purchasing).
 3. **Monitor.** After go-live, six daily checks on the live data: POS feed gaps, counted usage that does not match sales times recipes, deliveries with no invoice, price jumps, skipped counts, and new invoice lines that are not mapped.
 
-All data is made up: a ten-location taqueria group with invented locations, sales, recipes and counts. Sysco, US Foods and Restaurant Depot are real distributors; the codes, descriptions and prices are invented in the style of their order guides.
+All data is made up: a ten-location taqueria group with invented locations, sales, recipes, and counts. Sysco, US Foods, and Restaurant Depot are real distributors; the codes, descriptions, and prices are invented in the style of their order guides.
 
 ## Run it
 

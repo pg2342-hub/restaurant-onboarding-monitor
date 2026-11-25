@@ -1,8 +1,8 @@
-"""The made-up restaurant group: catalog, vendor order guides, menu, recipes and locations.
+"""The made-up restaurant group: catalog, vendor order guides, menu, recipes, and locations.
 
 Everything here is invented for the demo. Vendor names (Sysco, US Foods, Restaurant Depot) are real
 distributors and appear because their order guides are what a group exports at onboarding; the item
-codes, descriptions and prices are made up in their style.
+codes, descriptions, and prices are made up in their style.
 """
 
 from __future__ import annotations

@@ -291,7 +291,7 @@ DELIVERY_DAYS = {"Sysco": (1, 4, 8, 11), "US Foods": (2, 5, 9, 12), "Restaurant 
 
 
 def live(incidents: list[str] | None = None, seed: int = 11) -> dict:
-    """Days 1 to 14 after go-live for L01 to L03: sales, purchase orders, invoices and counts.
+    """Days 1 to 14 after go-live for L01 to L03: sales, purchase orders, invoices, and counts.
 
     Inventory is simulated so the counts agree with sales and recipes to within a few percent; each
     incident then changes one thing, as it would in a real kitchen.

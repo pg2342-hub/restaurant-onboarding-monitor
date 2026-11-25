@@ -944,7 +944,7 @@
         "alert_name": "Usage does not match sales",
         "day": 11,
         "detail": "oaxaca cheese: counts show 43.0 lb used on days 9 to 11, sales and recipes say 33.7 (28% more, about $52)",
-        "first_check": "Recount the item, then check portioning, waste log and the recipe yield",
+        "first_check": "Recount the item, then check portioning, waste log, and the recipe yield",
         "kind": "count_variance",
         "location": "L01",
         "owner": "General manager"
@@ -980,7 +980,7 @@
         "alert_name": "Usage does not match sales",
         "day": 14,
         "detail": "corn masa flour: counts show 95.3 lb used on days 12 to 14, sales and recipes say 129.1 (26% less, about $29)",
-        "first_check": "Recount the item, then check portioning, waste log and the recipe yield",
+        "first_check": "Recount the item, then check portioning, waste log, and the recipe yield",
         "kind": "count_variance",
         "location": "L02",
         "owner": "General manager"
